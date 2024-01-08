@@ -1,0 +1,135 @@
+﻿@using BookSto.Models;
+@model List<Thung>
+@{
+    ViewBag.Title = "TrangChu";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    thungsach s_top = TempData["s_top"] as thungsach;
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
+                    <div class="newrealease-contens">
+                        <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/01.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/02.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/03.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/04.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/05.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/06.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/07.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/08.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0);">
+                                    <img src="~/template/booksto/html/images/new_realeases/09.jpg" class="img-fluid w-100 rounded" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                        <div class="iq-header-title">
+                            <h4 class="card-title mb-0">Mặt hàng có sẵn</h4>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <a href="" class="btn btn-sm btn-primary view-more">Xem thêm</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="row">
+                            @if (Model != null)
+                            {
+                                foreach (Thung s in Model)
+                                {
+                                    <div class="col-sm-6 col-md-4 col-lg-3">
+                                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
+                                            <div class="iq-card-body p-0">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="col-6 p-0 position-relative image-overlap-shadow shadow">
+                                                        <a href="javascript:void();"><img class="img-fluid rounded w-100" src="~/assets/book_images/@s.Anh" alt=""></a>
+                                                        <div class="view-book">
+                                                            <a href="@Url.Action("ChiTietSach", "Sach", new { @MaThung = s.MaThung} )" class="btn btn-sm btn-white">Xem chi tiết</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="mb-2">
+                                                            <h6 class="mb-1">@s.TenSach</h6>
+                                                            <p class="font-size-13 line-height mb-1">@s.TacGia</p>
+                                                            <p class="font-size-13 line-height mb-1">@s.TongSoThung thùng có sẵn</p>
+                                                            <p class="font-size-13 line-height mb-1">@s.SoSachTrongThung quyển/thùng</p>
+                                                        </div>
+                                                        @if (s.GiamGia != 0)
+                                                        {
+                                                            <div class="price d-flex align-items-center">
+                                                                <span class="pr-1 old-price font-size-12">@String.Format("{0:N0}", s.Gia) ₫<br></span>
+                                                                <h6>
+                                                                    <b class="text-danger font-size-18">-@s.Sach.GiamGia%</b>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="price d-flex align-items-center">
+                                                                <h6>
+                                                                    <b class=" text-success">@String.Format("{0:N0}", s.Gia - s.Gia * s.GiamGia / 100) ₫</b>
+                                                                </h6>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="price d-flex align-items-center">
+                                                                <h6><b class=" text-success">@String.Format("{0:N0}", s.Gia) ₫</b></h6>
+                                                            </div>
+                                                        }
+                                                        <div class="iq-product-action">
+                                                            <a href="@Url.Action("ThemSach_GioHang","Sach", new{@MaThung = s.MaThung , @Url = Request.Url.ToString()})"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a50d33aea9874f8c8176c6e1146cd1bb" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="BookStoModel.ctdonnhap" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.ctdonxuat" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.donnhap" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.donxuat" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.nguoidung" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.nhaxb" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.sach" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.sysdiagram" Width="1.5" PointX="5.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.tacgia" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.theloai" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.thungsach" Width="1.5" PointX="10.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoModel.vitri" Width="1.5" PointX="12.75" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="BookStoModel.ctdonnhap_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.ctdonnhap_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.thungsach_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.ctdonxuat_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.ctdonxuat_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.thung_ibfk_4" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.donnhap_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.donnhap_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.donxuat_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.donxuat_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.sach_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.sach_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.sach_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.thungsach_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.vitri_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoModel.vitri_ibfk_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

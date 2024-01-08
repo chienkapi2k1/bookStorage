@@ -1,0 +1,230 @@
+﻿@using BookSto.Models
+@model vitri
+@{
+    ViewBag.Title = "Thêm Vị Trí";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    List<SachThung> temp_thungsach = TempData["thungsach"] as List<SachThung>;
+    TempData.Keep("thungsach"); // giữ lại tempdata vì khi bị đọc 1 lần sẽ tự xóa
+    List<vitri> temp_vitricha = TempData["vitricha"] as List<vitri>;
+    TempData.Keep("vitricha");
+    List<int?> temp_LoaiViTri = TempData["LoaiViTri"] as List<int?>;
+    TempData.Keep("LoaiViTri");
+    string tb = ViewBag.name_ThongBao;
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Thêm vị trí</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ThemViTri","Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Mã Thùng:</label>
+                                <select class="form-control" id="MaThung" name="MaThung">
+                                    <option value="" >Trống</option>
+                                    @if (Model != null)
+                                    {
+                                        if (temp_thungsach.Count() > 0 && temp_thungsach != null)
+                                        {
+                                            foreach (SachThung item in temp_thungsach)
+                                            {
+                                                if (Model.MaThung == item.MaThung)
+                                                {
+                                                    <option selected value="@item.MaThung">#@item.MaThung - @item.TenSach</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.MaThung">#@item.MaThung - @item.TenSach</option>
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (temp_thungsach.Count() > 0 && temp_thungsach != null)
+                                        {
+                                            foreach (SachThung item in temp_thungsach)
+                                            {
+                                                <option value="@item.MaThung">#@item.MaThung - @item.TenSach</option>
+                                            }
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Mã vị trí cha:</label>
+                                <select class="form-control" id="MaViTriCha" name="MaViTriCha">
+                                    <option value="" selected >Không khả dụng</option>
+                                    @if (Model != null)
+                                    {
+                                        foreach (vitri item in temp_vitricha)
+                                        {
+                                            if (Model.MaViTriCha == item.MaViTri)
+                                            {
+                                                <option selected value="@item.MaViTri">@item.MaViTri - @item.TenViTri</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaViTri">@item.MaViTri - @item.TenViTri</option>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (vitri item in temp_vitricha)
+                                        {
+                                            <option value="@item.MaViTri">@item.MaViTri - @item.TenViTri</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input id="LoaiViTri" name="LoaiViTri" value="0" hidden type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tên vị trí:</label>
+                                <span style="color:red; font-size:14px;"> @tb</span>
+                                @Html.ValidationMessageFor(model => model.O, "", new { @class = "text-danger" })
+                                <input id="O" name="O" type="text" class="form-control" placeholder="1, 2, 3... hoặc A, B, C...">
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng Thái:</label>
+                                <select class="form-control" id="TrangThai" name="TrangThai">
+                                    @if (Model != null)
+                                    {
+                                        for (int? item = 0; item < 3; item++)
+                                        {
+                                            switch (item)
+                                            {
+                                                case 0:
+                                                    if (Model.TrangThai == item)
+                                                    {
+                                                        <option selected value="@item">Trống</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item">Trống</option>
+                                                    }
+                                                    break;
+                                                case 1:
+                                                    if (Model.TrangThai == item)
+                                                    {
+                                                        <option selected value="@item">Đầy</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item">Đầy</option>
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    if (Model.TrangThai == item)
+                                                    {
+                                                        <option selected value="@item">Không khả dụng</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item">Không khả dụng</option>
+                                                    }
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for (int? item = 0; item < 3; item++)
+                                        {
+                                            switch (@item)
+                                            {
+                                                case 0:
+                                                    <option value="@item">Trống</option>
+                                                    break;
+                                                case 1:
+                                                    <option value="@item">Đầy</option>
+                                                    break;
+                                                case 2:
+                                                    <option value="@item">Không khả dụng</option>
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#MaThung").change(function () {
+                var val_MaThung = $("#MaThung").val();
+                var check = 2; // val_MaThung = "" là k chọn mã thùng
+                if (val_MaThung != "") {
+                    check = 1;                  // có chọn mã thùng
+                }
+                if (check == 1) {
+@*                    $('#LoaiViTri option').each(function () {
+                        if ($(this).val() == 4) {
+                            $(this).prop("selected", true);
+                        }
+                    });*@
+                    $('#TrangThai option').each(function () {
+                        if ($(this).val() == 1) {
+                            $(this).prop("selected", true);
+                        }
+                    });
+                } else {
+@*                    $('#LoaiViTri option').each(function () {
+                        if ($(this).val() == 1) {
+                            $(this).prop("selected", true);
+                        }
+                    });*@
+                    $('#TrangThai option').each(function () {
+                        if ($(this).val() == 0) {
+                            $(this).prop("selected", true);
+                        }
+                    });
+                }
+                @*change_name_inputName();*@
+            });
+@*            $("#LoaiViTri").change(function () {
+                change_name_inputName();
+            });*@
+            function change_name_inputName() {
+                var name_id = $('#LoaiViTri').find('option:selected').text();
+                var input_name_new = '';
+                switch (name_id) {
+                    case "Ô":
+                        input_name_new = 'O';
+                        break;
+                    case "Tầng":
+                        input_name_new = 'Tang';
+                        break;
+                    case "Kệ":
+                        input_name_new = 'Ke';
+                        break;
+                    case "Nhà":
+                        input_name_new = 'Nha';
+                        break;
+                }
+                const input = document.getElementById("name_id");
+                input.setAttribute("name", input_name_new);
+                //console.log(name_id + " , " + " , " + input_name_new);
+            }
+        });
+    </script>
+}

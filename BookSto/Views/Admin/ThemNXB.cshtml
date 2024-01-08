@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "ThemNXB";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Thêm Nhà xuất bản </h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ThemNXB","Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Tên Nhà xuất bản:</label>
+                                <input type="text" id="TenNXB" name="TenNXB" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="reset" class="btn btn-danger">Làm mới</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

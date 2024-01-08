@@ -1,0 +1,99 @@
+﻿@using BookSto.Models
+@model List<donnhap>
+@{
+    ViewBag.Title = "PhieuNhapKho";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var vb_tukhoa = "";
+    if (ViewBag.TuKhoa != null)
+    {
+        vb_tukhoa = ViewBag.TuKhoa;
+    }
+}
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Phiếu nhập kho</h4>
+                        </div>
+                        <div class="iq-search-bar">
+                            <form action="#" class="searchbox">
+                                @if (vb_tukhoa != "")
+                                {
+                                    <input value="@vb_tukhoa" name="TuKhoa" id="TuKhoa" type="text" class="text search-input" placeholder="Search Here...">
+                                }
+                                else
+                                {
+                                    <input value="" name="TuKhoa" id="TuKhoa" type="text" class="text search-input" placeholder="Search Here...">
+                                }
+                                <a type="submit" class="search-link" href=""><i class="ri-search-line"></i></a>
+                            </form>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <a href="@Url.Action("LapPhieuNhapKho","Admin")" class="btn btn-primary">Lập phiếu nhập kho</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table style="text-align: center;" class="data-tables table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 7%;">Mã PNK</th>
+                                        <th style="width: 20%;">Tên nhân viên</th>
+                                        <th style="width: 20%;">Tên khách hàng</th>
+                                        <th style="width: 20%;">Ngày tạo</th>
+                                        <th style="width: 13%;">Tổng tiền</th>
+                                        <th style="width: 10%;">Trạng Thái</th>
+                                        <th style="width: 10%;">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    foreach (donnhap item in Model)
+                                    {
+                                        <tr>
+                                            <td>#@item.MaDN</td>
+                                            <td style="text-align: left;">#@item.MaNhanVien - @item.nguoidung1.HoTen</td>
+                                            @if (item.MaKhachHang != null)
+                                            {
+                                                <td style="text-align: left;">#@item.MaKhachHang - @item.nguoidung.HoTen</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align: left;"></td>
+                                            }
+                                            <td>@item.NgayTao</td>
+                                            <td>@String.Format("{0:N0}", item.TongTien) ₫</td> @*@String.Format("{0:C}", item.TongTien) 500.000,00 đ *@
+                                            <td style="text-align: center;">
+                                                @switch (item.TrangThai)
+                                                {
+                                                    case 0:
+                                                        <span class="badge badge-danger">Hủy đơn</span>
+                                                        break;
+                                                    case 1:
+                                                        <span class="badge badge-success">Hoàn thành</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge badge-warning">Đang xử lý</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <div class="flex align-items-center list-user-action">
+                                                    <a href="@Url.Action("ChinhSuaPhieuNhapKho","Admin", new { MaDN = item.MaDN })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa"><i class="ri-pencil-line"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

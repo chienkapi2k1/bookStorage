@@ -1,0 +1,107 @@
+﻿@using BookSto.Models;
+@model donxuat
+@{
+    ViewBag.Title = "CTDonDat";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <div class="iq-header-title">
+                                <h5 class="card-title">Đơn hàng</h5>
+                            </div>
+                            <table style="text-align: center;" class="data-tables table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 7%;">Mã Đơn</th>
+                                        <th style="width: 33%;">Mặt hàng</th>
+                                        <th style="width: 20%;">Ngày đặt</th>
+                                        <th style="width: 13%;">Tổng tiền</th>
+                                        <th style="width: 10%;">Trạng Thái</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    <tr>
+                                        <td>#@Model.MaDB</td>
+                                        <td style="text-align: left;">
+                                            @foreach (ctdonxuat ct in Model.ctdonxuats)
+                                            {
+                                                @ct.sach.TenSach <br>
+                                            }
+                                        </td>
+                                        <td>@Model.NgayTao</td>
+                                        <td style="font-weight:bold;">@String.Format("{0:N0}", Model.TongTien) ₫</td> @*@String.Format("{0:C}", item.TongTien) 500.000,00 đ *@
+                                        <td style="text-align: center;">
+                                            @switch (Model.TrangThai)
+                                            {@*trạng thái đơn xuất (1: chờ admin duyệt, 5: hủy đơn, 2:admin chấp nhận đơn, 3:đang giao hàng, 4 : đã nhận hàng)*@
+                                            case 5:
+                                                <span class="badge badge-secondary">Hủy đơn</span>
+                                                break;
+                                            case 1:
+                                                <span class="badge badge-warning">Chờ duyệt</span>
+                                                break;
+                                            case 2:
+                                                <span class="badge badge-info">Đã duyệt đơn</span>
+                                                break;
+                                            case 3:
+                                                <span class="badge badge-warning">Đang giao hàng</span>
+                                                break;
+                                            case 4:
+                                                <span class="badge badge-success">Đã nhận hàng</span>
+                                                break;
+                                        }
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <div class="iq-header-title">
+                                <h5 class="card-title">Chi tiết đơn hàng</h5>
+                            </div>
+                            <table style="text-align: center;" class="data-tables table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30%;">Tên Sách</th>
+                                        <th style="width: 7%;">Ảnh</th>
+                                        <th style="width: 8%;">Số Thùng</th>
+                                        <th style="width: 8%;">Sách/thùng</th>
+                                        <th style="width: 12%;">Giá Nhập/Thùng</th>
+                                        <th style="width: 12%;">Thành Tiền</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    foreach (ctdonxuat item in Model.ctdonxuats)
+                                    {
+                                        <tr>
+                                            <td style="text-align: left;">@item.sach.TenSach</td>
+                                            <td><img class="img-fluid rounded" src="@Url.Content("~/assets/book_images/" + item.sach.Anh)" alt=""></td>
+                                            <td>x @item.SoLuong</td>
+                                            @foreach (thungsach ts in item.thungsaches)
+                                            {
+                                                if (ts.SoLuongSach != null)
+                                                {
+                                                    <td>@ts.SoLuongSach</td>
+                                                    break;
+                                                }
+                                            }
+                                            <td>@String.Format("{0:N0}", item.GiaXuat) ₫</td>
+                                            <td>@String.Format("{0:N0}", item.GiaXuat * item.SoLuong) ₫</td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

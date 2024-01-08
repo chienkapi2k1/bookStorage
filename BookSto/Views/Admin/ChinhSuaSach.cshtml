@@ -1,0 +1,142 @@
+﻿@using BookSto.Models
+@model sach
+@{
+    ViewBag.Title = "ChinhSuaSach";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    List<tacgia> viewbag_tacgia = ViewBag.tacgia1;
+    List<theloai> viewbag_theloai = ViewBag.theloai1;
+    List<nhaxb> viewbag_nhaxb = ViewBag.nhaxb1;
+}
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Thêm Sách</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ChinhSuaSach","Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <input type="hidden" id="MaSach" name="MaSach" value="@Model.MaSach">
+                            </div>
+                            <div class="form-group">
+                                <label>Tên sách:</label>
+                                <input value="@Model.TenSach" id="TenSach" name="TenSach" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng Thái:</label>
+                                <select class="form-control" id="exampleFormControlSelect1 TrangThai" name="TrangThai">
+                                    @if (Model.TrangThai == 1)
+                                    {
+                                        <option value="1" selected>Hoạt Động</option>
+                                        <option value="0">Không Hoạt Động</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="1">Hoạt Động</option>
+                                        <option value="0" selected>Không Hoạt Động</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Thể loại:</label>
+                                <select class="form-control" id="exampleFormControlSelect1 MaTheLoai" name="MaTheLoai">
+                                    @foreach (theloai item in viewbag_theloai)
+                                    {
+                                        if (item.MaTheLoai == Model.MaTheLoai)
+                                        {
+                                            <option selected value="@item.MaTheLoai">@item.TenTheLoai</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MaTheLoai">@item.TenTheLoai</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tác giả:</label>
+                                <select class="form-control" id="exampleFormControlSelect2 MaTacGia" name="MaTacGia">
+                                    @foreach (tacgia item in viewbag_tacgia)
+                                    {
+                                        if (item.MaTacGia == Model.MaTacGia)
+                                        {
+                                            <option selected value="@item.MaTacGia">@item.MaTacGia</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MaTacGia">@item.MaTacGia</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nhà xuất bản:</label>
+                                <select class="form-control" id="exampleFormControlSelect2 MaNXB" name="MaNXB">
+                                    @foreach (nhaxb item in viewbag_nhaxb)
+                                    {
+                                        if (item.MaNXB == Model.MaNXB)
+                                        {
+                                            <option selected value="@item.MaNXB">@item.MaNXB</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MaNXB">@item.MaNXB</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ảnh:</label>
+                                <div class="custom-file">
+                                    <input value="@Model.Anh" id="Anh file-upload" name="Anh" type="file" class="custom-file-input" accept="image/png, image/jpeg">
+                                    <label class="custom-file-label"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Giá gốc:</label>
+                                <input value="@Model.GiaTriSach" id="GiaTriSach" name="GiaTriSach" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Giảm giá(%):</label>
+                                <input value="@Model.GiamGia" id="GiamGia" name="GiamGia" type="text" class="form-control">%
+                            </div>
+                            <div class="form-group">
+                                <label>Thùng:</label>
+                                <input value="@Model.SoLuong" id="SoLuong" name="SoLuong" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Số trang:</label>
+                                <input value="@Model.TongSoTrang" id="TongSoTrang" name="TongSoTrang" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tập:</label>
+                                <input value="@Model.Tap" id="Tap" name="Tap" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tổng số tập:</label>
+                                <input value="@Model.TongSoTap" id="TongSoTap" name="TongSoTap" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Giới thiệu:</label>
+                                <input value="@Model.GioiThieu" id="GioiThieu" name="GioiThieu" type="text" class="form-control" rows="3">
+                            </div>
+                            <div class="form-group">
+                                <label>Tóm tắt:</label>
+                                <input value="@Model.TomTat" id="TomTat" name="TomTat" type="text" class="form-control" rows="3">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

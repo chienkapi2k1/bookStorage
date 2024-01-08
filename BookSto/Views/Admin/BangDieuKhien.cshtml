@@ -1,0 +1,293 @@
+﻿@using BookSto.Models;
+@model List<donxuat>
+@{
+    ViewBag.Title = "BangDieuKhien";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    int kh = (int)TempData["kh"];
+    TempData.Keep("kh");
+    int s = (int)TempData["s"];
+    TempData.Keep("s");
+    int dh = (int)TempData["dh"];
+    TempData.Keep("dh");
+    string doanhso = TempData["doanhso"] as string;
+    TempData.Keep("doanhso");
+    double? chiphi = TempData["chiphi"] as double?;
+    TempData.Keep("chiphi");
+    double? loinhuan = TempData["loinhuan"] as double?;
+    TempData.Keep("loinhuan");
+
+    Tuple<decimal, long, int> month = TempData["month"] as Tuple<decimal, long, int>;
+    TempData.Keep("month");
+    Tuple<decimal, long, int> week = TempData["week"] as Tuple<decimal, long, int>;
+    TempData.Keep("week");
+    Tuple<decimal, long, int> day = TempData["day"] as Tuple<decimal, long, int>;
+    TempData.Keep("day");
+    string thang = DateTime.Now.Day + "/" + DateTime.Now.Month;
+}
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle iq-card-icon bg-primary"><i class="ri-user-line"></i></div>
+                            <div class="text-left ml-3">
+                                <h2 class="mb-0"><span class="counter">@kh</span></h2>
+                                <h5 class="">Khách hàng</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle iq-card-icon bg-danger"><i class="ri-book-line"></i></div>
+                            <div class="text-left ml-3">
+                                <h2 class="mb-0"><span class="counter">@s</span></h2>
+                                <h5 class="">Sách</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle iq-card-icon bg-warning"><i class="ri-shopping-cart-2-line"></i></div>
+                            <div class="text-left ml-3">
+                                <h2 class="mb-0"><span class="">@doanhso</span></h2>
+                                <h5 class="">Doanh số</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle iq-card-icon bg-info"><i class="ri-radar-line"></i></div>
+                            <div class="text-left ml-3">
+                                <h2 class="mb-0"><span class="counter">@dh</span></h2>
+                                <h5 class="">Đơn hàng</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-header d-flex justify-content-between align-items-center">
+                        <div class="iq-header-title">
+                            <h4 class="card-title mb-0">Tuần này</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div id="iq-sale-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-header d-flex justify-content-between align-items-center">
+                        <div class="iq-header-title">
+                            <h4 class="card-title mb-0">Thống kê tháng @DateTime.Now.Month</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <ul class="list-inline p-0 mb-0">
+                            <li>
+                                <div class="iq-details mb-2">
+                                    <span class="title">Doanh số</span>
+                                    <div class="percentage float-right text-primary">100 <span>%</span></div>
+                                    <div class="iq-progress-bar-linear d-inline-block w-100">
+                                        <div style="height: 10px;" class="progress mb-3">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="iq-details mb-2">
+                                    <span class="title">Lợi nhuận</span>
+                                    <div class="percentage float-right text-warning">@loinhuan <span>%</span></div>
+                                    <div class="iq-progress-bar-linear d-inline-block w-100">
+                                        <div style="height: 10px;" class="progress mb-3">
+                                            @if (loinhuan >= 100)
+                                            {
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: @Math.Abs((sbyte)loinhuan)%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="iq-details mb-2">
+                                    <span class="title">Chi phí</span>
+                                    <div class="percentage float-right text-info">@chiphi <span>%</span></div>
+                                    <div class="iq-progress-bar-linear d-inline-block w-100">
+                                        <div style="height: 10px;" class="progress mb-3">
+                                            @if (chiphi > 100)
+                                            {
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: @Math.Abs((sbyte)chiphi)%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-body">
+                        <h4 class="text-uppercase text-black mb-0">So sánh</h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class=" text-black" style="font-size:60px;" >@thang</div>
+                            <div class="text-left">
+                                <p class="m-0 text-uppercase font-size-12">1 tháng trước</p>
+                                <div class="mb-1 text-black">  
+                                    @String.Format("{0:N0}", month.Item2) ₫
+                                    @if (month.Item3 == 1)
+                                    {
+                                        <span class="text-success"><i class="ri-arrow-up-s-fill"></i>+@month.Item1%</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="ri-arrow-down-s-fill"></i>@month.Item1%</span>
+                                    }
+                                </div>
+                                <p class="m-0 text-uppercase font-size-12">1 tuần trước</p>
+                                <div class="mb-1 text-black">
+                                    @String.Format("{0:N0}", week.Item2) ₫
+                                    @if (week.Item3 == 1)
+                                    {
+                                        <span class="text-success"><i class="ri-arrow-up-s-fill"></i>+@week.Item1%</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="ri-arrow-down-s-fill"></i>@week.Item1%</span>
+                                    }
+                                </div>
+                                <p class="m-0 text-uppercase font-size-12">1 ngày trước</p>
+                                <div class="text-black">
+                                    @String.Format("{0:N0}", day.Item2) ₫
+                                    @if (day.Item3 == 1)
+                                    {
+                                        <span class="text-success"><i class="ri-arrow-up-s-fill"></i>+@day.Item1%</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="ri-arrow-down-s-fill"></i>@day.Item1%</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wave-chart-7"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Hóa đơn xuất gần đây</h4>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <div class="dropdown">
+                                <span class="dropdown-toggle text-primary" id="dropdownMenuButton5" data-toggle="dropdown">
+                                    <i class="ri-more-fill"></i>
+                                </span>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton5">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Mã</th>
+                                        <th scope="col">Tên nhân viên</th>
+                                        <th scope="col">Tên khách hàng</th>
+                                        <th scope="col">Ngày tạo</th>
+                                        <th scope="col">Tổng tiền</th>
+                                        <th scope="col">Trạng Thái</th>
+                                        <th scope="col">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (donxuat item in Model)
+                                        {
+                                            <tr>
+                                                <td>#@item.MaDB</td>
+                                                @if (item.MaNhanVien != null)
+                                                {
+                                                    <td style="text-align: left;">#@item.MaNhanVien - @item.nguoidung1.HoTen</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align: left;"></td>
+                                                }
+                                                <td style="text-align: left;">#@item.MaKhachHang - @item.nguoidung.HoTen</td>
+                                                <td>@item.NgayTao</td>
+                                                <td>@String.Format("{0:N0}", item.TongTien) ₫</td> @*@String.Format("{0:C}", item.TongTien) 500.000,00 đ *@
+                                                <td style="text-align: center;">
+                                                    @switch (item.TrangThai)
+                                                    {@*trạng thái đơn xuất (1: chờ admin duyệt, 5: hủy đơn, 2:admin chấp nhận đơn, 3:đang giao hàng, 4 : đã nhận hàng)*@
+                                                    case 5:
+                                                        <span class="badge badge-secondary">Hủy đơn</span>
+                                                        break;
+                                                    case 1:
+                                                        <span class="badge badge-warning">Chờ duyệt</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge badge-info">Chấp nhận đơn</span>
+                                                        break;
+                                                    case 3:
+                                                        <span class="badge badge-warning">Đang giao hàng</span>
+                                                        break;
+                                                    case 4:
+                                                        <span class="badge badge-success">Đã nhận hàng</span>
+                                                        break;
+                                                }
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <div class="flex align-items-center list-user-action">
+                                                        <a href="@Url.Action("NhanDon","Admin", new { MaDB = item.MaDB })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa"><i class="ri-pencil-line"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

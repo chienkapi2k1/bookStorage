@@ -1,0 +1,216 @@
+﻿@using BookSto.Models
+@model List<GioHang>
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    double? tongtien = ViewBag.TongTien as double?;
+}
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid checkout-content">
+        <div class="row">
+            <div id="cart" class="card-block show p-0 col-12">
+                <div class="row align-item-center">
+                    <div class="col-lg-8">
+                        <div class="iq-card">
+                            <div class="iq-card-header d-flex justify-content-between iq-border-bottom mb-0">
+                                <div class="iq-header-title">
+                                    <h4 class="card-title">Giỏ Hàng</h4>
+                                </div>
+                            </div>
+                            <div class="iq-card-body">
+                                <ul class="list-inline p-0 m-0">
+                                    @foreach (GioHang item in Model)
+                                    {
+                                        <li MaThung="@item.ts.MaThung" class="li-thung checkout-product">
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-2">
+                                                    <span class="checkout-product-img">
+                                                        <a href="javascript:void();"><img class="img-fluid rounded" src="~/assets/book_images/@item.ts.sach.Anh" alt=""></a>
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="checkout-product-details">
+                                                        <h5>@item.ts.sach.TenSach</h5>
+                                                        <p>@item.ts.SoLuongSach quyển/thùng</p>
+                                                        <p>@item.TonKho thùng có sẵn</p>
+                                                        <div class="price">
+                                                            @if (item.ts.sach.GiamGia != 0)
+                                                            {
+                                                                <p class="text-danger pr-1 old-price font-size-11">@String.Format("{0:N0}", item.ts.SoLuongSach * item.ts.sach.GiaTriSach) ₫</p>
+                                                                <p class="text-success">@String.Format("{0:N0}", item.GiaThung) ₫</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="text-success">@String.Format("{0:N0}", item.GiaThung) ₫</p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <div class="row align-items-center mt-2">
+                                                                <div class="col-sm-7 col-md-6">
+                                                                    <input type="number" value="@item.SoThung" min="1" max="@item.TonKho" name="SoLuong" id="SoLuong" title="Số Lượng" oninput="validity.valid||(value='1');">
+                                                                </div>
+                                                                <div class="col-sm-5 col-md-6">
+                                                                    <span class="product-price text-success">@String.Format("{0:N0}", item.ThanhTien) ₫</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <a href="@Url.Action("XoaSach_GioHang", "Sach", new { @MaThung = item.ts.MaThung })" class="text-dark font-size-20"><i class="ri-delete-bin-7-fill"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                                @if (Model.Count() == 0)
+                                {
+                                    <a href="@Url.Action("PhanLoaiSach","Sach")" class="btn btn-primary">Mua Hàng</a>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary capnhat_giohang">Cập nhật giỏ hàng</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="iq-card">
+                            <div class="iq-card-body">
+                                <p>Hóa Đơn</p>
+                                <div class="d-flex justify-content-between">
+                                    <span>Giảm giá</span>
+                                    <span><a href="#"><strong>Áp dụng</strong></a></span>
+                                </div>
+                                <hr>
+                                <p><b>Chi tiết đơn</b></p>
+                                @foreach (GioHang item in Model)
+                                {
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>@item.ts.sach.TenSach <b>x @item.SoThung</b></span>
+                                        <span>@String.Format("{0:N0}", item.ThanhTien) ₫</span>
+                                    </div>
+                                    if (item.ts.sach.GiamGia != 0)
+                                    {
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span></span>
+                                            <span class="text-danger">@String.Format("{0:N0}", -item.ts.sach.GiaTriSach * item.ts.SoLuongSach * item.ts.sach.GiamGia / 100) ₫</span>
+                                        </div>
+                                    }
+                                }
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Đã bao gồm thuế</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Phí giao hàng</span>
+                                    <span class="text-success">Miễn phí</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-dark"><strong>Tổng tiền</strong></span>
+                                    <span class="text-dark"><strong>@String.Format("{0:N0}", @tongtien) ₫</strong></span>
+                                </div>
+                                @if (Session["TaiKhoan"] != null )
+                                {
+                                    <hr>
+                                    <h4 class="mb-2">@Session["Hoten"].ToString()</h4>
+                                    <div class="shipping-address">
+                                        @if (Session["DiaChi"] != null)
+                                        {
+                                            <p>Địa chỉ nhận hàng: @Session["DiaChi"].ToString()</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Địa chỉ nhận hàng: </p>
+                                        }
+                                        @if (Session["DiaChi"] != null)
+                                        {
+                                            <p>Số điện thoại: @Session["SDT"].ToString()</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Số điện thoại:</p>
+                                        }
+                                        
+                                    </div>
+                                }
+                                <hr>
+                                @if (Model.Count() >0)
+                                {
+                                    <a id="place-order" href="@Url.Action("DatHang","Sach")" class="btn btn-primary d-block mt-3 next">Đặt hàng</a>
+                                }
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+
+                        </div>
+                        <div class="iq-card ">
+                            <div class="card-body iq-card-body p-0 iq-checkout-policy">
+                                <ul class="p-0 m-0">
+                                    <li class="d-flex align-items-center">
+                                        <div class="iq-checkout-icon">
+                                            <i class="ri-checkbox-line"></i>
+                                        </div>
+                                        <h6>Chính sách bảo mật (Thanh toán an toàn và bảo mật)</h6>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <div class="iq-checkout-icon">
+                                            <i class="ri-truck-line"></i>
+                                        </div>
+                                        <h6>Chính sách giao hàng (Giao hàng tận nhà)</h6>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <div class="iq-checkout-icon">
+                                            <i class="ri-arrow-go-back-line"></i>
+                                        </div>
+                                        <h6>Chính sách hoàn trả (Dễ dàng hoàn trả)</h6>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // cập nhật giỏ hàng
+            $('.capnhat_giohang').click(function () {
+                var listMaThung = [];
+                var listSL = [];
+                $(".li-thung").each(function () {
+                    listMaThung.push($(this).attr("MaThung"));
+                    listSL.push($(this).find("input[Name=SoLuong]").val());
+                });
+
+                $.ajax({
+                    url: "/Sach/CapNhatGioHang",
+                    type: "POST",
+                    data: {
+                        listMaThung: listMaThung,
+                        listSL: listSL
+                    },
+                    dataType: "json",
+                    success: function (mess) {
+                        if (mess == "200") {
+                            alert("Cập nhật giỏ hàng thành công !");
+                            window.location.href = "/Sach/GioHang";
+                        }
+                    },
+                    error: function () {
+                        alert("Cập nhật giỏ hàng không thành công !");
+                    }
+                });
+            });
+        })
+    </script>
+}

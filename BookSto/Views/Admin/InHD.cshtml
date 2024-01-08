@@ -1,0 +1,154 @@
+﻿@using BookSto.Models
+@model donxuat
+@{
+    ViewBag.Title = "InHD";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <img src="~/template/booksto/html/images/logo.png" class="img-fluid avatar-100" alt="">
+                            </div>
+                            <div class="col-lg-6 align-self-center">
+                                <h4 class="mb-0 float-right">Hóa Đơn</h4>
+                            </div>
+                            <div class="col-sm-12">
+                                <hr class="mt-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive-sm">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Thời gian</th>
+                                                <th scope="col">Trạng thái</th>
+                                                <th scope="col">Mã hóa đơn</th>
+                                                <th scope="col">Tên khách hàng</th>
+                                                <th scope="col">Địa chỉ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Model.NgayTao</td>
+                                                @switch (Model.TrangThai)
+                                                {@*trạng thái đơn xuất (1: chờ admin duyệt, 5: hủy đơn, 2:admin chấp nhận đơn, 3:đang giao hàng, 4 : đã nhận hàng)*@
+                                                case 5:
+                                                    <td><span class="badge badge-secondary">Hủy đơn</span></td>
+                                                    break;
+                                                case 1:
+                                                    <td>
+                                                        <span class="badge badge-warning">Chờ duyệt</span>
+                                                    </td>
+                                                    break;
+                                                case 2:
+                                                    <td>
+                                                        <span class="badge badge-info">Chấp nhận đơn</span>
+                                                    </td>
+                                                    break;
+                                                case 3:
+                                                    <td>
+                                                        <span class="badge badge-warning">Đang giao hàng</span>
+                                                    </td>
+                                                    break;
+                                                case 4:
+                                                    <td>
+                                                        <span class="badge badge-success">Đã nhận hàng</span>
+                                                    </td>
+                                                    break;
+                                            }
+                                                <td>#@Model.MaDB</td>
+                                                <td>@Model.nguoidung.HoTen (@Model.nguoidung.Tuoi)</td>
+                                                <td>
+                                                    <p class="mb-0">
+                                                        @Model.nguoidung.DiaChi<br>
+                                                        Số điện thoại: @Model.nguoidung.SDT<br>
+                                                        Email: @Model.nguoidung.Email<br>
+                                                        Ghi chú: @Model.nguoidung.GhiChu
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5>Chi tiết</h5>
+                                <div class="table-responsive-sm">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" scope="col">#</th>
+                                                <th scope="col">Sản phẩm</th>
+                                                <th class="text-center" scope="col">Số lượng</th>
+                                                <th class="text-center" scope="col">Giá thùng</th>
+                                                <th class="text-center" scope="col">Tổng tiền</th>
+                                                <th class="text-center" scope="col">Giảm giá</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (ctdonxuat item in @Model.ctdonxuats)
+                                            {
+                                                <tr>
+                                                    <th class="text-center" scope="row">@item.MaCTDonXuat</th>
+                                                    <td>
+                                                        <h6 class="mb-0">@item.sach.TenSach</h6>
+                                                        <p class="mb-0">@item.sach.tacgia.TenTacGia</p>
+                                                    </td>
+                                                    <td class="text-center">x @item.SoLuong thùng</td>
+                                                    <td class="text-center">@String.Format("{0:N0}", item.sach.GiaTriSach * item.thungsaches.First(n => n.MaSach == item.MaSach).SoLuongSach - item.sach.GiaTriSach * item.thungsaches.First(n => n.MaSach == item.MaSach).SoLuongSach * item.sach.GiamGia / 100) ₫</td>
+
+                                                    <td class="text-center"><b>@String.Format("{0:N0}", @item.GiaXuat) ₫</b></td>
+                                                    <td class="text-center">
+                                                        @if (item.sach.GiamGia != 0)
+                                                        {
+                                                            <span class="text-danger">@String.Format("{0:N0}", -item.sach.GiaTriSach * item.thungsaches.First(n => n.MaSach == item.MaSach).SoLuongSach * item.sach.GiamGia / 100) ₫</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>---------</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="w-50 d-flex justify-content-between">
+                                    <span class="text-dark font-size-24"><strong>Tổng tiền</strong></span>
+                                    <span class="text-dark font-size-24"><strong>@String.Format("{0:N0}", Model.TongTien) ₫</strong></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-12 mt-5">
+                                <b class="text-danger">Cảm ơn đã lựa chọn chúng tôi!</b>
+                                <p>Chúc bạn có một ngày tốt lành!</p>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                <button type="button" id="btnPrint" class="btn text-primary btn-link mr-3"><i class="ri-printer-line"></i>In hóa đơn</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    document.getElementById("btnPrint").addEventListener("click", function() {
+        // Kích thích chức năng in của trình duyệt
+        window.print();
+    });
+    </script>
+    }

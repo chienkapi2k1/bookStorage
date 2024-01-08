@@ -1,0 +1,117 @@
+﻿@using BookSto.Models
+@model List<DSViTri>
+@{
+    ViewBag.Title = "DSViTri";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var vb_tukhoa = "";
+    if (ViewBag.TuKhoa != null)
+    {
+        vb_tukhoa = ViewBag.TuKhoa;
+    }
+}
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Danh sách Vị trí</h4>
+                        </div>
+                        <div class="iq-search-bar">
+                            <form action="#" class="searchbox">
+                                @if (vb_tukhoa != "")
+                                {
+                                    <input value="@vb_tukhoa" name="TuKhoa" id="TuKhoa" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                else
+                                {
+                                    <input value="" name="TuKhoa" id="TuKhoa" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                <a type="submit" class="search-link" href=""><i class="ri-search-line"></i></a>
+                            </form>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <a href="@Url.Action("AddSlot","Admin")" class="btn btn-primary">Thêm nhanh</a>
+                            <a style="margin-left: 15px;" href="@Url.Action("ThemViTri","Admin")" class="btn btn-primary">Thêm vị trí</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table style="text-align: center;" class="data-tables table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">#id</th>
+                                        <th style="width: 5%;">Mã thùng</th>
+                                        <th style="width: 40%;">Tên thùng sách</th>
+                                        <th style="width: 7%;">Số lượng sách</th>
+                                        <th style="width: 7%;">Mã vị trí cha</th>
+                                        <th style="width: 20%;">Tên vị trí</th>
+                                        <th style="width: 7%;">Loại vị trí</th>
+                                        <th style="width: 10%;">Trạng Thái</th>
+                                        <th style="width: 7%;">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.MaViTri</td>
+                                            <td>@item.MaThung</td>
+                                            <td style="text-align: left;">@item.TenThung</td>
+                                            <td>@item.SoLuongSach</td>
+                                            <td>@item.MaViTriCha</td>
+                                            <td  style="text-align: left;">@item.TenViTri</td>
+                                            <td>
+                                                @switch (@item.LoaiViTri)
+                                                {
+                                                    case 1:
+                                                        <span class="badge badge-secondary">Nhà</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge badge-secondary">Kệ</span>
+                                                        break;
+                                                    case 3:
+                                                        <span class="badge badge-secondary">Tầng</span>
+                                                        break;
+                                                    case 4:
+                                                        <span class="badge badge-warning">Ô</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @switch (@item.TrangThai)
+                                                {
+                                                    case 0:
+                                                        <span class="badge badge-danger">Trống</span>
+                                                        break;
+                                                    case 1:
+                                                        <span class="badge badge-success">Đã đầy</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge badge-dark">Không khả dụng</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <div class="flex align-items-center list-user-action">
+                                                    <a href="@Url.Action("ChinhSuaViTri","Admin", new { MaViTri = item.MaViTri })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa"><i class="ri-pencil-line"></i></a>
+                                                    @*<a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#"><i class="ri-delete-bin-line"></i></a>*@
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

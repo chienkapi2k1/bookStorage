@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookStoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ctdonnhap">
+    <Key>
+      <PropertyRef Name="MaCTDonNhap" />
+    </Key>
+    <Property Name="MaCTDonNhap" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaSach" Type="int" Nullable="false" />
+    <Property Name="MaDN" Type="int" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+    <Property Name="GiaNhap" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ctdonxuat">
+    <Key>
+      <PropertyRef Name="MaCTDonXuat" />
+    </Key>
+    <Property Name="MaCTDonXuat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaDB" Type="int" Nullable="false" />
+    <Property Name="MaSach" Type="int" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+    <Property Name="GiaXuat" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="donnhap">
+    <Key>
+      <PropertyRef Name="MaDN" />
+    </Key>
+    <Property Name="MaDN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaKhachHang" Type="int" />
+    <Property Name="MaNhanVien" Type="int" Nullable="false" />
+    <Property Name="NgayTao" Type="datetime" />
+    <Property Name="TongTien" Type="int" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
+    <Property Name="TrangThai" Type="int" />
+  </EntityType>
+  <EntityType Name="donxuat">
+    <Key>
+      <PropertyRef Name="MaDB" />
+    </Key>
+    <Property Name="MaDB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaKhachHang" Type="int" Nullable="false" />
+    <Property Name="MaNhanVien" Type="int" />
+    <Property Name="NgayTao" Type="datetime" />
+    <Property Name="TongTien" Type="int" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
+    <Property Name="TrangThai" Type="int" />
+  </EntityType>
+  <EntityType Name="nguoidung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaiKhoan" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="MatKhau" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="20" />
+    <Property Name="Tuoi" Type="int" />
+    <Property Name="GioiTinh" Type="tinyint" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="SDT" Type="varchar" MaxLength="15" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="TrangThai" Type="int" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="nhaxb">
+    <Key>
+      <PropertyRef Name="MaNXB" />
+    </Key>
+    <Property Name="MaNXB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenNXB" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sach">
+    <Key>
+      <PropertyRef Name="MaSach" />
+    </Key>
+    <Property Name="MaSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaTheLoai" Type="int" Nullable="false" />
+    <Property Name="MaTacGia" Type="int" Nullable="false" />
+    <Property Name="MaNXB" Type="int" Nullable="false" />
+    <Property Name="TenSach" Type="nvarchar" MaxLength="255" />
+    <Property Name="TomTat" Type="nvarchar" MaxLength="255" />
+    <Property Name="TongSoTrang" Type="int" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="Tap" Type="int" />
+    <Property Name="TongSoTap" Type="int" />
+    <Property Name="GiaTriSach" Type="float" />
+    <Property Name="GiamGia" Type="float" />
+    <Property Name="GioiThieu" Type="nvarchar" MaxLength="255" />
+    <Property Name="TrangThai" Type="int" />
+    <Property Name="Anh" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tacgia">
+    <Key>
+      <PropertyRef Name="MaTacGia" />
+    </Key>
+    <Property Name="MaTacGia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenTacGia" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="TrangThai" Type="int" />
+    <Property Name="GioiThieu" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="theloai">
+    <Key>
+      <PropertyRef Name="MaTheLoai" />
+    </Key>
+    <Property Name="MaTheLoai" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenTheLoai" Type="nvarchar" MaxLength="255" />
+    <Property Name="TrangThai" Type="int" Nullable="false" />
+    <Property Name="GioiThieu" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="thungsach">
+    <Key>
+      <PropertyRef Name="MaThung" />
+    </Key>
+    <Property Name="MaThung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaSach" Type="int" Nullable="false" />
+    <Property Name="MaCTDonXuat" Type="int" />
+    <Property Name="MaCTDonNhap" Type="int" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
+    <Property Name="TrangThai" Type="int" />
+    <Property Name="SoLuongSach" Type="int" />
+  </EntityType>
+  <EntityType Name="vitri">
+    <Key>
+      <PropertyRef Name="MaViTri" />
+    </Key>
+    <Property Name="MaViTri" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaThung" Type="int" />
+    <Property Name="MaViTriCha" Type="int" />
+    <Property Name="TenViTri" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LoaiViTri" Type="int" />
+    <Property Name="Nha" Type="nvarchar" MaxLength="10" />
+    <Property Name="Ke" Type="int" />
+    <Property Name="Tang" Type="int" />
+    <Property Name="O" Type="int" />
+    <Property Name="TrangThai" Type="int" />
+  </EntityType>
+  <Association Name="ctdonnhap_ibfk_2">
+    <End Role="donnhap" Type="Self.donnhap" Multiplicity="1" />
+    <End Role="ctdonnhap" Type="Self.ctdonnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="donnhap">
+        <PropertyRef Name="MaDN" />
+      </Principal>
+      <Dependent Role="ctdonnhap">
+        <PropertyRef Name="MaDN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonnhap_ibfk_3">
+    <End Role="sach" Type="Self.sach" Multiplicity="1" />
+    <End Role="ctdonnhap" Type="Self.ctdonnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sach">
+        <PropertyRef Name="MaSach" />
+      </Principal>
+      <Dependent Role="ctdonnhap">
+        <PropertyRef Name="MaSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonxuat_ibfk_2">
+    <End Role="donxuat" Type="Self.donxuat" Multiplicity="1" />
+    <End Role="ctdonxuat" Type="Self.ctdonxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="donxuat">
+        <PropertyRef Name="MaDB" />
+      </Principal>
+      <Dependent Role="ctdonxuat">
+        <PropertyRef Name="MaDB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonxuat_ibfk_3">
+    <End Role="sach" Type="Self.sach" Multiplicity="1" />
+    <End Role="ctdonxuat" Type="Self.ctdonxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sach">
+        <PropertyRef Name="MaSach" />
+      </Principal>
+      <Dependent Role="ctdonxuat">
+        <PropertyRef Name="MaSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donnhap_ibfk_1">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="0..1" />
+    <End Role="donnhap" Type="Self.donnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donnhap">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donnhap_ibfk_2">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="1" />
+    <End Role="donnhap" Type="Self.donnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donnhap">
+        <PropertyRef Name="MaNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donxuat_ibfk_1">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="1" />
+    <End Role="donxuat" Type="Self.donxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donxuat">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donxuat_ibfk_2">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="0..1" />
+    <End Role="donxuat" Type="Self.donxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donxuat">
+        <PropertyRef Name="MaNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sach_ibfk_1">
+    <End Role="nhaxb" Type="Self.nhaxb" Multiplicity="1" />
+    <End Role="sach" Type="Self.sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nhaxb">
+        <PropertyRef Name="MaNXB" />
+      </Principal>
+      <Dependent Role="sach">
+        <PropertyRef Name="MaNXB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sach_ibfk_2">
+    <End Role="theloai" Type="Self.theloai" Multiplicity="1" />
+    <End Role="sach" Type="Self.sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="theloai">
+        <PropertyRef Name="MaTheLoai" />
+      </Principal>
+      <Dependent Role="sach">
+        <PropertyRef Name="MaTheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sach_ibfk_3">
+    <End Role="tacgia" Type="Self.tacgia" Multiplicity="1" />
+    <End Role="sach" Type="Self.sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tacgia">
+        <PropertyRef Name="MaTacGia" />
+      </Principal>
+      <Dependent Role="sach">
+        <PropertyRef Name="MaTacGia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="thung_ibfk_4">
+    <End Role="ctdonxuat" Type="Self.ctdonxuat" Multiplicity="0..1" />
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ctdonxuat">
+        <PropertyRef Name="MaCTDonXuat" />
+      </Principal>
+      <Dependent Role="thungsach">
+        <PropertyRef Name="MaCTDonXuat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="thungsach_ibfk_2">
+    <End Role="ctdonnhap" Type="Self.ctdonnhap" Multiplicity="0..1" />
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ctdonnhap">
+        <PropertyRef Name="MaCTDonNhap" />
+      </Principal>
+      <Dependent Role="thungsach">
+        <PropertyRef Name="MaCTDonNhap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="thungsach_ibfk_3">
+    <End Role="sach" Type="Self.sach" Multiplicity="1" />
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sach">
+        <PropertyRef Name="MaSach" />
+      </Principal>
+      <Dependent Role="thungsach">
+        <PropertyRef Name="MaSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vitri_ibfk_1">
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="0..1" />
+    <End Role="vitri" Type="Self.vitri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="thungsach">
+        <PropertyRef Name="MaThung" />
+      </Principal>
+      <Dependent Role="vitri">
+        <PropertyRef Name="MaThung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vitri_ibfk_2">
+    <End Role="vitri" Type="Self.vitri" Multiplicity="0..1" />
+    <End Role="vitri1" Type="Self.vitri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vitri">
+        <PropertyRef Name="MaViTri" />
+      </Principal>
+      <Dependent Role="vitri1">
+        <PropertyRef Name="MaViTriCha" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BookStoModelStoreContainer">
+    <EntitySet Name="ctdonnhap" EntityType="Self.ctdonnhap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ctdonxuat" EntityType="Self.ctdonxuat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="donnhap" EntityType="Self.donnhap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="donxuat" EntityType="Self.donxuat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="nguoidung" EntityType="Self.nguoidung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="nhaxb" EntityType="Self.nhaxb" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sach" EntityType="Self.sach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tacgia" EntityType="Self.tacgia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="theloai" EntityType="Self.theloai" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="thungsach" EntityType="Self.thungsach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vitri" EntityType="Self.vitri" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="ctdonnhap_ibfk_2" Association="Self.ctdonnhap_ibfk_2">
+      <End Role="donnhap" EntitySet="donnhap" />
+      <End Role="ctdonnhap" EntitySet="ctdonnhap" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonnhap_ibfk_3" Association="Self.ctdonnhap_ibfk_3">
+      <End Role="sach" EntitySet="sach" />
+      <End Role="ctdonnhap" EntitySet="ctdonnhap" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonxuat_ibfk_2" Association="Self.ctdonxuat_ibfk_2">
+      <End Role="donxuat" EntitySet="donxuat" />
+      <End Role="ctdonxuat" EntitySet="ctdonxuat" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonxuat_ibfk_3" Association="Self.ctdonxuat_ibfk_3">
+      <End Role="sach" EntitySet="sach" />
+      <End Role="ctdonxuat" EntitySet="ctdonxuat" />
+    </AssociationSet>
+    <AssociationSet Name="donnhap_ibfk_1" Association="Self.donnhap_ibfk_1">
+      <End Role="nguoidung" EntitySet="nguoidung" />
+      <End Role="donnhap" EntitySet="donnhap" />
+    </AssociationSet>
+    <AssociationSet Name="donnhap_ibfk_2" Association="Self.donnhap_ibfk_2">
+      <End Role="nguoidung" EntitySet="nguoidung" />
+      <End Role="donnhap" EntitySet="donnhap" />
+    </AssociationSet>
+    <AssociationSet Name="donxuat_ibfk_1" Association="Self.donxuat_ibfk_1">
+      <End Role="nguoidung" EntitySet="nguoidung" />
+      <End Role="donxuat" EntitySet="donxuat" />
+    </AssociationSet>
+    <AssociationSet Name="donxuat_ibfk_2" Association="Self.donxuat_ibfk_2">
+      <End Role="nguoidung" EntitySet="nguoidung" />
+      <End Role="donxuat" EntitySet="donxuat" />
+    </AssociationSet>
+    <AssociationSet Name="sach_ibfk_1" Association="Self.sach_ibfk_1">
+      <End Role="nhaxb" EntitySet="nhaxb" />
+      <End Role="sach" EntitySet="sach" />
+    </AssociationSet>
+    <AssociationSet Name="sach_ibfk_2" Association="Self.sach_ibfk_2">
+      <End Role="theloai" EntitySet="theloai" />
+      <End Role="sach" EntitySet="sach" />
+    </AssociationSet>
+    <AssociationSet Name="sach_ibfk_3" Association="Self.sach_ibfk_3">
+      <End Role="tacgia" EntitySet="tacgia" />
+      <End Role="sach" EntitySet="sach" />
+    </AssociationSet>
+    <AssociationSet Name="thung_ibfk_4" Association="Self.thung_ibfk_4">
+      <End Role="ctdonxuat" EntitySet="ctdonxuat" />
+      <End Role="thungsach" EntitySet="thungsach" />
+    </AssociationSet>
+    <AssociationSet Name="thungsach_ibfk_2" Association="Self.thungsach_ibfk_2">
+      <End Role="ctdonnhap" EntitySet="ctdonnhap" />
+      <End Role="thungsach" EntitySet="thungsach" />
+    </AssociationSet>
+    <AssociationSet Name="thungsach_ibfk_3" Association="Self.thungsach_ibfk_3">
+      <End Role="sach" EntitySet="sach" />
+      <End Role="thungsach" EntitySet="thungsach" />
+    </AssociationSet>
+    <AssociationSet Name="vitri_ibfk_1" Association="Self.vitri_ibfk_1">
+      <End Role="thungsach" EntitySet="thungsach" />
+      <End Role="vitri" EntitySet="vitri" />
+    </AssociationSet>
+    <AssociationSet Name="vitri_ibfk_2" Association="Self.vitri_ibfk_2">
+      <End Role="vitri" EntitySet="vitri" />
+      <End Role="vitri1" EntitySet="vitri" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

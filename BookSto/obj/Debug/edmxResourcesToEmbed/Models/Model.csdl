@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookStoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ctdonnhap">
+    <Key>
+      <PropertyRef Name="MaCTDonNhap" />
+    </Key>
+    <Property Name="MaCTDonNhap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaSach" Type="Int32" Nullable="false" />
+    <Property Name="MaDN" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Int32" Nullable="false" />
+    <Property Name="GiaNhap" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="donnhap" Relationship="Self.ctdonnhap_ibfk_2" FromRole="ctdonnhap" ToRole="donnhap" />
+    <NavigationProperty Name="sach" Relationship="Self.ctdonnhap_ibfk_3" FromRole="ctdonnhap" ToRole="sach" />
+    <NavigationProperty Name="thungsaches" Relationship="Self.thungsach_ibfk_2" FromRole="ctdonnhap" ToRole="thungsach" />
+  </EntityType>
+  <EntityType Name="ctdonxuat">
+    <Key>
+      <PropertyRef Name="MaCTDonXuat" />
+    </Key>
+    <Property Name="MaCTDonXuat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaDB" Type="Int32" Nullable="false" />
+    <Property Name="MaSach" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Int32" Nullable="false" />
+    <Property Name="GiaXuat" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="donxuat" Relationship="Self.ctdonxuat_ibfk_2" FromRole="ctdonxuat" ToRole="donxuat" />
+    <NavigationProperty Name="sach" Relationship="Self.ctdonxuat_ibfk_3" FromRole="ctdonxuat" ToRole="sach" />
+    <NavigationProperty Name="thungsaches" Relationship="Self.thung_ibfk_4" FromRole="ctdonxuat" ToRole="thungsach" />
+  </EntityType>
+  <EntityType Name="donnhap">
+    <Key>
+      <PropertyRef Name="MaDN" />
+    </Key>
+    <Property Name="MaDN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaKhachHang" Type="Int32" />
+    <Property Name="MaNhanVien" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Precision="3" />
+    <Property Name="TongTien" Type="Int32" />
+    <Property Name="GhiChu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Int32" />
+    <NavigationProperty Name="ctdonnhaps" Relationship="Self.ctdonnhap_ibfk_2" FromRole="donnhap" ToRole="ctdonnhap" />
+    <NavigationProperty Name="nguoidung" Relationship="Self.donnhap_ibfk_1" FromRole="donnhap" ToRole="nguoidung" />
+    <NavigationProperty Name="nguoidung1" Relationship="Self.donnhap_ibfk_2" FromRole="donnhap" ToRole="nguoidung" />
+  </EntityType>
+  <EntityType Name="donxuat">
+    <Key>
+      <PropertyRef Name="MaDB" />
+    </Key>
+    <Property Name="MaDB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
+    <Property Name="MaNhanVien" Type="Int32" />
+    <Property Name="NgayTao" Type="DateTime" Precision="3" />
+    <Property Name="TongTien" Type="Int32" />
+    <Property Name="GhiChu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Int32" />
+    <NavigationProperty Name="ctdonxuats" Relationship="Self.ctdonxuat_ibfk_2" FromRole="donxuat" ToRole="ctdonxuat" />
+    <NavigationProperty Name="nguoidung" Relationship="Self.donxuat_ibfk_1" FromRole="donxuat" ToRole="nguoidung" />
+    <NavigationProperty Name="nguoidung1" Relationship="Self.donxuat_ibfk_2" FromRole="donxuat" ToRole="nguoidung" />
+  </EntityType>
+  <EntityType Name="nguoidung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaiKhoan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MatKhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HoTen" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Tuoi" Type="Int32" />
+    <Property Name="GioiTinh" Type="Byte" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SDT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DiaChi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="GhiChu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="donnhaps" Relationship="Self.donnhap_ibfk_1" FromRole="nguoidung" ToRole="donnhap" />
+    <NavigationProperty Name="donnhaps1" Relationship="Self.donnhap_ibfk_2" FromRole="nguoidung" ToRole="donnhap" />
+    <NavigationProperty Name="donxuats" Relationship="Self.donxuat_ibfk_1" FromRole="nguoidung" ToRole="donxuat" />
+    <NavigationProperty Name="donxuats1" Relationship="Self.donxuat_ibfk_2" FromRole="nguoidung" ToRole="donxuat" />
+  </EntityType>
+  <EntityType Name="nhaxb">
+    <Key>
+      <PropertyRef Name="MaNXB" />
+    </Key>
+    <Property Name="MaNXB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenNXB" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="saches" Relationship="Self.sach_ibfk_1" FromRole="nhaxb" ToRole="sach" />
+  </EntityType>
+  <EntityType Name="sach">
+    <Key>
+      <PropertyRef Name="MaSach" />
+    </Key>
+    <Property Name="MaSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaTheLoai" Type="Int32" Nullable="false" />
+    <Property Name="MaTacGia" Type="Int32" Nullable="false" />
+    <Property Name="MaNXB" Type="Int32" Nullable="false" />
+    <Property Name="TenSach" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TomTat" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TongSoTrang" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="Tap" Type="Int32" />
+    <Property Name="TongSoTap" Type="Int32" />
+    <Property Name="GiaTriSach" Type="Double" />
+    <Property Name="GiamGia" Type="Double" />
+    <Property Name="GioiThieu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="Anh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ctdonnhaps" Relationship="Self.ctdonnhap_ibfk_3" FromRole="sach" ToRole="ctdonnhap" />
+    <NavigationProperty Name="ctdonxuats" Relationship="Self.ctdonxuat_ibfk_3" FromRole="sach" ToRole="ctdonxuat" />
+    <NavigationProperty Name="nhaxb" Relationship="Self.sach_ibfk_1" FromRole="sach" ToRole="nhaxb" />
+    <NavigationProperty Name="theloai" Relationship="Self.sach_ibfk_2" FromRole="sach" ToRole="theloai" />
+    <NavigationProperty Name="tacgia" Relationship="Self.sach_ibfk_3" FromRole="sach" ToRole="tacgia" />
+    <NavigationProperty Name="thungsaches" Relationship="Self.thungsach_ibfk_3" FromRole="sach" ToRole="thungsach" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tacgia">
+    <Key>
+      <PropertyRef Name="MaTacGia" />
+    </Key>
+    <Property Name="MaTacGia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenTacGia" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="GioiThieu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="saches" Relationship="Self.sach_ibfk_3" FromRole="tacgia" ToRole="sach" />
+  </EntityType>
+  <EntityType Name="theloai">
+    <Key>
+      <PropertyRef Name="MaTheLoai" />
+    </Key>
+    <Property Name="MaTheLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenTheLoai" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Int32" Nullable="false" />
+    <Property Name="GioiThieu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="saches" Relationship="Self.sach_ibfk_2" FromRole="theloai" ToRole="sach" />
+  </EntityType>
+  <EntityType Name="thungsach">
+    <Key>
+      <PropertyRef Name="MaThung" />
+    </Key>
+    <Property Name="MaThung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaSach" Type="Int32" Nullable="false" />
+    <Property Name="MaCTDonXuat" Type="Int32" />
+    <Property Name="MaCTDonNhap" Type="Int32" />
+    <Property Name="GhiChu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="SoLuongSach" Type="Int32" />
+    <NavigationProperty Name="ctdonnhap" Relationship="Self.thungsach_ibfk_2" FromRole="thungsach" ToRole="ctdonnhap" />
+    <NavigationProperty Name="ctdonxuat" Relationship="Self.thung_ibfk_4" FromRole="thungsach" ToRole="ctdonxuat" />
+    <NavigationProperty Name="sach" Relationship="Self.thungsach_ibfk_3" FromRole="thungsach" ToRole="sach" />
+    <NavigationProperty Name="vitris" Relationship="Self.vitri_ibfk_1" FromRole="thungsach" ToRole="vitri" />
+  </EntityType>
+  <EntityType Name="vitri">
+    <Key>
+      <PropertyRef Name="MaViTri" />
+    </Key>
+    <Property Name="MaViTri" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaThung" Type="Int32" />
+    <Property Name="MaViTriCha" Type="Int32" />
+    <Property Name="TenViTri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoaiViTri" Type="Int32" />
+    <Property Name="Nha" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Ke" Type="Int32" />
+    <Property Name="Tang" Type="Int32" />
+    <Property Name="O" Type="Int32" />
+    <Property Name="TrangThai" Type="Int32" />
+    <NavigationProperty Name="thungsach" Relationship="Self.vitri_ibfk_1" FromRole="vitri" ToRole="thungsach" />
+    <NavigationProperty Name="vitri1" Relationship="Self.vitri_ibfk_2" FromRole="vitri" ToRole="vitri1" />
+    <NavigationProperty Name="vitri2" Relationship="Self.vitri_ibfk_2" FromRole="vitri1" ToRole="vitri" />
+  </EntityType>
+  <Association Name="ctdonnhap_ibfk_2">
+    <End Role="donnhap" Type="Self.donnhap" Multiplicity="1" />
+    <End Role="ctdonnhap" Type="Self.ctdonnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="donnhap">
+        <PropertyRef Name="MaDN" />
+      </Principal>
+      <Dependent Role="ctdonnhap">
+        <PropertyRef Name="MaDN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonnhap_ibfk_3">
+    <End Role="sach" Type="Self.sach" Multiplicity="1" />
+    <End Role="ctdonnhap" Type="Self.ctdonnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sach">
+        <PropertyRef Name="MaSach" />
+      </Principal>
+      <Dependent Role="ctdonnhap">
+        <PropertyRef Name="MaSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="thungsach_ibfk_2">
+    <End Role="ctdonnhap" Type="Self.ctdonnhap" Multiplicity="0..1" />
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ctdonnhap">
+        <PropertyRef Name="MaCTDonNhap" />
+      </Principal>
+      <Dependent Role="thungsach">
+        <PropertyRef Name="MaCTDonNhap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonxuat_ibfk_2">
+    <End Role="donxuat" Type="Self.donxuat" Multiplicity="1" />
+    <End Role="ctdonxuat" Type="Self.ctdonxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="donxuat">
+        <PropertyRef Name="MaDB" />
+      </Principal>
+      <Dependent Role="ctdonxuat">
+        <PropertyRef Name="MaDB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonxuat_ibfk_3">
+    <End Role="sach" Type="Self.sach" Multiplicity="1" />
+    <End Role="ctdonxuat" Type="Self.ctdonxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sach">
+        <PropertyRef Name="MaSach" />
+      </Principal>
+      <Dependent Role="ctdonxuat">
+        <PropertyRef Name="MaSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="thung_ibfk_4">
+    <End Role="ctdonxuat" Type="Self.ctdonxuat" Multiplicity="0..1" />
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ctdonxuat">
+        <PropertyRef Name="MaCTDonXuat" />
+      </Principal>
+      <Dependent Role="thungsach">
+        <PropertyRef Name="MaCTDonXuat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donnhap_ibfk_1">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="0..1" />
+    <End Role="donnhap" Type="Self.donnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donnhap">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donnhap_ibfk_2">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="1" />
+    <End Role="donnhap" Type="Self.donnhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donnhap">
+        <PropertyRef Name="MaNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donxuat_ibfk_1">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="1" />
+    <End Role="donxuat" Type="Self.donxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donxuat">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donxuat_ibfk_2">
+    <End Role="nguoidung" Type="Self.nguoidung" Multiplicity="0..1" />
+    <End Role="donxuat" Type="Self.donxuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nguoidung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="donxuat">
+        <PropertyRef Name="MaNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sach_ibfk_1">
+    <End Role="nhaxb" Type="Self.nhaxb" Multiplicity="1" />
+    <End Role="sach" Type="Self.sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nhaxb">
+        <PropertyRef Name="MaNXB" />
+      </Principal>
+      <Dependent Role="sach">
+        <PropertyRef Name="MaNXB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sach_ibfk_2">
+    <End Role="theloai" Type="Self.theloai" Multiplicity="1" />
+    <End Role="sach" Type="Self.sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="theloai">
+        <PropertyRef Name="MaTheLoai" />
+      </Principal>
+      <Dependent Role="sach">
+        <PropertyRef Name="MaTheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sach_ibfk_3">
+    <End Role="tacgia" Type="Self.tacgia" Multiplicity="1" />
+    <End Role="sach" Type="Self.sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tacgia">
+        <PropertyRef Name="MaTacGia" />
+      </Principal>
+      <Dependent Role="sach">
+        <PropertyRef Name="MaTacGia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="thungsach_ibfk_3">
+    <End Role="sach" Type="Self.sach" Multiplicity="1" />
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sach">
+        <PropertyRef Name="MaSach" />
+      </Principal>
+      <Dependent Role="thungsach">
+        <PropertyRef Name="MaSach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vitri_ibfk_1">
+    <End Role="thungsach" Type="Self.thungsach" Multiplicity="0..1" />
+    <End Role="vitri" Type="Self.vitri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="thungsach">
+        <PropertyRef Name="MaThung" />
+      </Principal>
+      <Dependent Role="vitri">
+        <PropertyRef Name="MaThung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vitri_ibfk_2">
+    <End Role="vitri" Type="Self.vitri" Multiplicity="0..1" />
+    <End Role="vitri1" Type="Self.vitri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vitri">
+        <PropertyRef Name="MaViTri" />
+      </Principal>
+      <Dependent Role="vitri1">
+        <PropertyRef Name="MaViTriCha" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BookStoEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ctdonnhaps" EntityType="Self.ctdonnhap" />
+    <EntitySet Name="ctdonxuats" EntityType="Self.ctdonxuat" />
+    <EntitySet Name="donnhaps" EntityType="Self.donnhap" />
+    <EntitySet Name="donxuats" EntityType="Self.donxuat" />
+    <EntitySet Name="nguoidungs" EntityType="Self.nguoidung" />
+    <EntitySet Name="nhaxbs" EntityType="Self.nhaxb" />
+    <EntitySet Name="saches" EntityType="Self.sach" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tacgias" EntityType="Self.tacgia" />
+    <EntitySet Name="theloais" EntityType="Self.theloai" />
+    <EntitySet Name="thungsaches" EntityType="Self.thungsach" />
+    <EntitySet Name="vitris" EntityType="Self.vitri" />
+    <AssociationSet Name="ctdonnhap_ibfk_2" Association="Self.ctdonnhap_ibfk_2">
+      <End Role="donnhap" EntitySet="donnhaps" />
+      <End Role="ctdonnhap" EntitySet="ctdonnhaps" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonnhap_ibfk_3" Association="Self.ctdonnhap_ibfk_3">
+      <End Role="sach" EntitySet="saches" />
+      <End Role="ctdonnhap" EntitySet="ctdonnhaps" />
+    </AssociationSet>
+    <AssociationSet Name="thungsach_ibfk_2" Association="Self.thungsach_ibfk_2">
+      <End Role="ctdonnhap" EntitySet="ctdonnhaps" />
+      <End Role="thungsach" EntitySet="thungsaches" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonxuat_ibfk_2" Association="Self.ctdonxuat_ibfk_2">
+      <End Role="donxuat" EntitySet="donxuats" />
+      <End Role="ctdonxuat" EntitySet="ctdonxuats" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonxuat_ibfk_3" Association="Self.ctdonxuat_ibfk_3">
+      <End Role="sach" EntitySet="saches" />
+      <End Role="ctdonxuat" EntitySet="ctdonxuats" />
+    </AssociationSet>
+    <AssociationSet Name="thung_ibfk_4" Association="Self.thung_ibfk_4">
+      <End Role="ctdonxuat" EntitySet="ctdonxuats" />
+      <End Role="thungsach" EntitySet="thungsaches" />
+    </AssociationSet>
+    <AssociationSet Name="donnhap_ibfk_1" Association="Self.donnhap_ibfk_1">
+      <End Role="nguoidung" EntitySet="nguoidungs" />
+      <End Role="donnhap" EntitySet="donnhaps" />
+    </AssociationSet>
+    <AssociationSet Name="donnhap_ibfk_2" Association="Self.donnhap_ibfk_2">
+      <End Role="nguoidung" EntitySet="nguoidungs" />
+      <End Role="donnhap" EntitySet="donnhaps" />
+    </AssociationSet>
+    <AssociationSet Name="donxuat_ibfk_1" Association="Self.donxuat_ibfk_1">
+      <End Role="nguoidung" EntitySet="nguoidungs" />
+      <End Role="donxuat" EntitySet="donxuats" />
+    </AssociationSet>
+    <AssociationSet Name="donxuat_ibfk_2" Association="Self.donxuat_ibfk_2">
+      <End Role="nguoidung" EntitySet="nguoidungs" />
+      <End Role="donxuat" EntitySet="donxuats" />
+    </AssociationSet>
+    <AssociationSet Name="sach_ibfk_1" Association="Self.sach_ibfk_1">
+      <End Role="nhaxb" EntitySet="nhaxbs" />
+      <End Role="sach" EntitySet="saches" />
+    </AssociationSet>
+    <AssociationSet Name="sach_ibfk_2" Association="Self.sach_ibfk_2">
+      <End Role="theloai" EntitySet="theloais" />
+      <End Role="sach" EntitySet="saches" />
+    </AssociationSet>
+    <AssociationSet Name="sach_ibfk_3" Association="Self.sach_ibfk_3">
+      <End Role="tacgia" EntitySet="tacgias" />
+      <End Role="sach" EntitySet="saches" />
+    </AssociationSet>
+    <AssociationSet Name="thungsach_ibfk_3" Association="Self.thungsach_ibfk_3">
+      <End Role="sach" EntitySet="saches" />
+      <End Role="thungsach" EntitySet="thungsaches" />
+    </AssociationSet>
+    <AssociationSet Name="vitri_ibfk_1" Association="Self.vitri_ibfk_1">
+      <End Role="thungsach" EntitySet="thungsaches" />
+      <End Role="vitri" EntitySet="vitris" />
+    </AssociationSet>
+    <AssociationSet Name="vitri_ibfk_2" Association="Self.vitri_ibfk_2">
+      <End Role="vitri" EntitySet="vitris" />
+      <End Role="vitri1" EntitySet="vitris" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BookStoModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BookStoModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

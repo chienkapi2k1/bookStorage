@@ -1,0 +1,182 @@
+﻿@using BookSto.Models;
+@model nguoidung
+@{
+    ViewBag.Title = "ThongTinTaiKhoan";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row profile-content">
+            <div class="col-12 col-md-12 col-lg-4">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container text-center">
+                                <img src="~/template/booksto/html/images/user/11.png" alt="profile-bg" class="rounded-circle img-fluid">
+                                <div class="profile-detail mt-3">
+                                    <h3>@Model.HoTen</h3>
+                                    @switch (Model.Role)
+                                    {
+                                        case "ADMIN":
+                                            <p class="text-primary">Admin</p>
+                                            break;
+                                        case "NHANVIEN":
+                                            <p class="text-primary">Nhân Viên</p>
+                                            break;
+                                        case "KHACHHANG":
+                                            <p class="text-primary">Khách Hàng</p>
+                                            break;
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="iq-card">
+                            <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
+                                <div class="iq-header-title">
+                                    <h4 class="card-title mb-0">Chi tiết cá nhân</h4>
+                                </div>
+                            </div>
+                            <div class="iq-card-body">
+                                <ul class="list-inline p-0 mb-0">
+                                    <li>
+                                        <div class="row align-items-center justify-content-between mb-3">
+                                            <div class="col-sm-6">
+                                                <h6>Tuổi</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="mb-0">@Model.Tuoi</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row align-items-center justify-content-between mb-3">
+                                            <div class="col-sm-6">
+                                                <h6>Giới tính</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                @if (Model.GioiTinh == 1)
+                                                {
+                                                    <p class="mb-0">Nam</p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="mb-0">Nữ</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row align-items-center justify-content-between mb-3">
+                                            <div class="col-sm-6">
+                                                <h6>Số điện thoại</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="mb-0">@Model.SDT</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row align-items-center justify-content-between mb-3">
+                                            <div class="col-sm-6">
+                                                <h6>Email</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="mb-0">@Model.Email</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row align-items-center justify-content-between mb-3">
+                                            <div class="col-sm-6">
+                                                <h6>Địa chỉ</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="mb-0">@Model.DiaChi</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                            <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
+                                <div class="iq-header-title">
+                                    <h4 class="card-title mb-0">Top Sách</h4>
+                                </div>
+                            </div>
+                            <div class="iq-card-body">
+                                <ul class="list-inline p-0 mb-0">
+                                    <li>
+                                        <div class="iq-details mb-2">
+                                            <span class="title">Phiêu lưu</span>
+                                            <div class="percentage float-right text-primary">95 <span>%</span></div>
+                                            <div class="iq-progress-bar-linear d-inline-block w-100">
+                                                <div class="iq-progress-bar">
+                                                    <span class="bg-primary" data-percent="95"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="iq-details mb-2">
+                                            <span class="title">Kinh dị</span>
+                                            <div class="percentage float-right text-warning">72 <span>%</span></div>
+                                            <div class="iq-progress-bar-linear d-inline-block w-100">
+                                                <div class="iq-progress-bar">
+                                                    <span class="bg-warning" data-percent="72"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="iq-details mb-2">
+                                            <span class="title">Truyện tranh</span>
+                                            <div class="percentage float-right text-info">75 <span>%</span></div>
+                                            <div class="iq-progress-bar-linear d-inline-block w-100">
+                                                <div class="iq-progress-bar">
+                                                    <span class="bg-info" data-percent="75"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="iq-details mb-2">
+                                            <span class="title">Tiểu sử</span>
+                                            <div class="percentage float-right text-danger">70 <span>%</span></div>
+                                            <div class="iq-progress-bar-linear d-inline-block w-100">
+                                                <div class="iq-progress-bar">
+                                                    <span class="bg-danger" data-percent="70"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="iq-details">
+                                            <span class="title">Huyền bí</span>
+                                            <div class="percentage float-right text-success">80 <span>%</span></div>
+                                            <div class="iq-progress-bar-linear d-inline-block w-100">
+                                                <div class="iq-progress-bar">
+                                                    <span class="bg-success" data-percent="80"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

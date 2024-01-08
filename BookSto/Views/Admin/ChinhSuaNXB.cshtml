@@ -1,0 +1,34 @@
+﻿@model BookSto.Models.nhaxb
+@{
+    ViewBag.Title = "ChinhSuaNXB";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Chỉnh sửa tác giả</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ChinhSuaNXB", "Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" id="MaNXB" name="MaNXB" value="@Model.MaNXB">
+                            <div class="form-group">
+                                <label>Tên nhà xuất bản:</label>
+                                <input type="text" id="TenNXB" name="TenNXB" class="form-control" value="@Model.TenNXB">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <button type="reset" class="btn btn-danger">Làm mới</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

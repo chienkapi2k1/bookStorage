@@ -1,0 +1,11 @@
+﻿<a href="@Url.Action("GioHang","Sach")" class="search-toggle iq-waves-effect text-gray rounded">
+    <i class="ri-shopping-cart-2-line"></i>
+    @if (@ViewBag.TongSoLuong == null)
+    {
+        <span class="badge badge-danger count-cart rounded-circle">0</span>
+    }
+    else
+    {
+        <span class="badge badge-danger count-cart rounded-circle">@ViewBag.TongSoLuong</span>
+    }
+</a>

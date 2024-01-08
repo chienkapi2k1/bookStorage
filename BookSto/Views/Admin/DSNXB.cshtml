@@ -1,0 +1,73 @@
+﻿@using BookSto.Models;
+@model List<nhaxb>
+@{
+    ViewBag.Title = "DSNXB";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var vb_ten = "";
+    if (ViewBag.TenTacGia != null)
+    {
+        vb_ten = ViewBag.TenTacGia;
+    }
+}
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Danh Sách Nhà xuất bản</h4>
+                        </div>
+                        <div class="iq-search-bar">
+                            <form action="#" class="searchbox">
+                                @if (vb_ten != "")
+                                {
+                                    <input value="@vb_ten" name="TenTacGia" id="TenTacGia" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                else
+                                {
+                                    <input value="" name="TenTacGia" id="TenTacGia" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                <a type="submit" class="search-link" href=""><i class="ri-search-line"></i></a>
+                            </form>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <a href="@Url.Action("ThemNXB","Admin")" class="btn btn-primary">Thêm NXB</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table class="data-tables table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 7%;">#id</th>
+                                        <th>Tên</th>
+                                        <th style="width: 10%;">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.MaNXB</td>
+                                            <td>@item.TenNXB</td>                                     
+                                            <td style="text-align: center;">
+                                                <div class="flex align-items-center list-user-action">
+                                                    <a href="@Url.Action("ChinhSuaNXB","Admin", new { @MaNXB = item.MaNXB })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa"><i class="ri-pencil-line"></i></a>
+                                                    @*<a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#"><i class="ri-delete-bin-line"></i></a>*@
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

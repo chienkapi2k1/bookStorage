@@ -1,0 +1,104 @@
+﻿@using BookSto.Models
+@{
+    ViewBag.Title = "ThemSach";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    List<tacgia> viewbag_tacgia = ViewBag.tacgia;
+    List<theloai> viewbag_theloai = ViewBag.theloai;
+    List<nhaxb> viewbag_nhaxb = ViewBag.nhaxb;
+}
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Thêm Sách</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ThemSach","Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Tên sách:</label>
+                                <input id="TenSach" name="TenSach" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Thể loại:</label>
+                                <select  class="form-control" id="exampleFormControlSelect1 MaTheLoai" name="MaTheLoai">
+                                    <option selected>---</option>
+                                    @foreach (theloai item in viewbag_theloai)
+                                    {
+                                        <option value="@item.MaTheLoai">@item.TenTheLoai</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tác giả:</label>
+                                <select class="form-control" id="exampleFormControlSelect2 MaTacGia" name="MaTacGia">
+                                    <option selected>---</option>
+                                    @foreach (tacgia item in viewbag_tacgia)
+                                    {
+                                        <option value="@item.MaTacGia">@item.TenTacGia</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nhà xuất bản:</label>
+                                <select class="form-control" id="exampleFormControlSelect2 MaNXB" name="MaNXB">
+                                    <option selected="" disabled="">---</option>
+                                    @foreach (nhaxb item in viewbag_nhaxb)
+                                    {
+                                        <option value="@item.MaNXB">@item.TenNXB</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ảnh:</label>
+                                <div class="custom-file">
+                                    <input id="Anh file-upload" name="Anh" type="file" class="custom-file-input" accept="image/png, image/jpeg">
+                                    <label class="custom-file-label" ></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Giá gốc:</label>
+                                <input id="GiaTriSach" name="GiaTriSach" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Giảm giá(%):</label>
+                                <input id="GiamGia" name="GiamGia" type="text" class="form-control">%
+                            </div>
+                            <div class="form-group">
+                                <label>Thùng:</label>
+                                <input id="SoLuong" name="SoLuong" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Số trang:</label>
+                                <input id="TongSoTrang" name="TongSoTrang" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tập:</label>
+                                <input id="Tap" name="Tap" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tổng số tập:</label>
+                                <input  id="TongSoTap" name="TongSoTap" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Giới thiệu:</label>
+                                <textarea  id="GioiThieu" name="GioiThieu" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Tóm tắt:</label>
+                                <textarea  id="TomTat" name="TomTat" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

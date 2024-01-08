@@ -1,0 +1,105 @@
+﻿@using BookSto.Models
+@model List<thungsach>
+@{
+    ViewBag.Title = "DSThung";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var vb_tukhoa = "";
+    if (ViewBag.TuKhoa != null)
+    {
+        vb_tukhoa = ViewBag.TuKhoa;
+    }
+}
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Danh Sách Thùng hàng</h4>
+                        </div>
+                        <div class="iq-search-bar">
+                            <form action="#" class="searchbox">
+                                @if (vb_tukhoa != "")
+                                {
+                                    <input value="@vb_tukhoa" name="TuKhoa" id="TuKhoa" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                else
+                                {
+                                    <input value="" name="TuKhoa" id="TuKhoa" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                <a type="submit" class="search-link" href=""><i class="ri-search-line"></i></a>
+                            </form>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table style="text-align: center;" class="data-tables table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">Mã thùng</th>
+                                        <th style="width: 35%;">Thùng sách</th>
+                                        <th style="width: 7%;">Số lượng sách</th>
+                                        <th style="width: 17%;">Tên vị trí</th>
+                                        <th style="width: 10%;">Trạng Thái</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.MaThung</td>
+                                        <td>@item.sach.TenSach</td>
+                                        <td>@item.SoLuongSach</td>
+                                        @switch (item.TrangThai)
+                                        {
+                                            case 0:
+                                                <td>--------------------</td>
+                                                <td>
+                                                    <span class="badge badge-info">Chuẩn bị Nhập kho</span>
+                                                </td>
+                                                break;
+                                            case 1:
+                                                foreach (var i in item.vitris)
+                                                {
+                                                    <td>@i.TenViTri</td>
+                                                    <td>
+                                                        <span class="badge badge-success">Trong kho</span>
+                                                    </td>
+                                                }
+                                                break;
+                                            case 2:
+                                                <td>--------------------</td>
+                                                <td>
+                                                    <span class="badge badge-secondary">Đã Bán</span>
+                                                </td>
+                                                break;
+                                            case -1:
+                                                foreach (var i in item.vitris)
+                                                {
+                                                    <td>@i.TenViTri</td>
+                                                    <td>
+                                                        <span class="badge badge-warning">Chuẩn bị Xuất kho</span>
+                                                    </td>
+                                                }
+                                                break;
+                                        }
+                                        @* tráng thái thùng (0: đơn nhập  hàng chưa xác nhận,1: thùng trong kho; 2: thùng đã bán; -1:đơn xuất chưa xác nhận)*@
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,91 @@
+﻿@using BookSto.Models;
+@model List<theloai>
+@{
+    ViewBag.Title = "Danh Sách Thể Loại";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var vb_ten = "";
+    if (ViewBag.TenTheLoai != null)
+    {
+        vb_ten = ViewBag.TenTheLoai;
+    }
+    var ViewBag_lstTheLoai = ViewBag.ListTheLoai as List<BookSto.Models.theloai>;
+}
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Danh sách Thể loại</h4>
+                        </div>
+                        <div class="iq-search-bar">
+                            <form action="#" class="searchbox">
+                                @if (vb_ten != "")
+                                {
+                                    <input  value="@vb_ten" name="TenTheLoai" id="TenTheLoai" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                else
+                                {
+                                    <input value="" name="TenTheLoai" id="TenTheLoai" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                <a type="submit" class="search-link" href="#"><i class="ri-search-line"></i></a>
+                            </form>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <a href="@Url.Action("ThemTheLoai","Admin")" class="btn btn-primary">Thêm mới</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table class="data-tables table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">#id</th>
+                                        <th width="20%">Tên</th>
+                                        <th width="15%">Trạng Thái</th>
+                                        <th width="50%">Giới Thiệu</th>
+                                        <th width="10%">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (ViewBag_lstTheLoai.Count() > 0)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>@item.MaTheLoai</td>
+                                                    <td>@item.TenTheLoai</td>
+                                                    <td style="text-align: center;">
+                                                        @if (@item.TrangThai == 1)
+                                                        {
+                                                            <span class="badge badge-success">Hoạt Động</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge badge-danger">Không Hoạt Động</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0">@item.GioiThieu</p>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <div class="flex align-items-center list-user-action">
+                                                            <a href="@Url.Action("ChinhSuaTheLoai","Admin", new { @MaTheLoai = item.MaTheLoai })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa"><i class="ri-pencil-line"></i></a>
+                                                            @*<a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#"><i class="ri-delete-bin-line"></i></a>*@
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

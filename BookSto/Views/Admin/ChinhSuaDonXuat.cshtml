@@ -1,0 +1,192 @@
+﻿@using BookSto.Models
+@model donxuat
+@{
+    ViewBag.Title = "ChinhSuaPhieuXuatKho";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    //chi tiet
+    List<ctdonxuat> ctpxk = ViewBag.ctpxk as List<ctdonxuat>;
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Sửa Phiếu xuất kho</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ChinhSuaDonXuat", "Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <input type="hidden" id="MaDB" name="MaDB" value="@Model.MaDB">
+                            </div>
+                            <div class="form-group">
+                                <label>Nhân Viên:</label>
+                                <input type="hidden" id="MaNhanVien" name="MaNhanVien" value="@Model.MaNhanVien">
+                                <input class="form-control" disabled id="exampleInputDisabled1" value="#@Model.nguoidung1.MaNguoiDung - @Model.nguoidung1.HoTen">
+                            </div>
+                            <div class="form-group">
+                                <label>Khách hàng:</label>
+                                <input type="hidden" id="MaKhachHang" name="MaKhachHang" value="@Model.MaKhachHang">
+                                <input class="form-control" disabled id="exampleInputDisabled1" value="#@Model.nguoidung.MaNguoiDung - @Model.nguoidung.HoTen">
+                            </div>
+                            <div class="form-group">
+                                <label>Địa chỉ:</label>
+                                <input class="form-control" disabled id="exampleInputDisabled1" name="DiaChi" value="@Model.nguoidung.DiaChi">
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại:</label>
+                                <input class="form-control" disabled id="exampleInputDisabled1" name="SDT" value="@Model.nguoidung.SDT">
+                            </div>
+                            <div id="name_vitri" class="form-group">
+                                <label>Ghi chú :</label>
+                                @if (Model.TrangThai == 5 || Model.TrangThai == 4)
+                                {
+                                    <input disabled id="GhiChu" name="GhiChu" value="@Model.GhiChu" type="text" class="form-control" placeholder="">
+                                }
+                                else
+                                {
+                                    <input id="GhiChu" name="GhiChu" value="@Model.GhiChu" type="text" class="form-control" placeholder="">
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng Thái:</label>
+                                @if (Model.TrangThai == 5)
+                                {
+                                    <input disabled id="TrangThai" name="TrangThai" value="Hủy đơn" type="text" class="form-control" placeholder="">
+                                }
+                                @if (Model.TrangThai == 4)
+                                {
+                                    <input disabled id="TrangThai" name="TrangThai" value="Hoàn thành" type="text" class="form-control" placeholder="">
+                                }
+                                else
+                                {
+                                    <select class="form-control" id="TrangThai" name="TrangThai">
+                                        @for (int? item = 1; item <= 5; item++)
+                                        {
+                                            @*trạng thái đơn xuất (1: chờ admin duyệt, 5: hủy đơn, 2:admin chấp nhận đơn, 3:đang giao hàng, 4 : đã nhận hàng)*@
+                                            if (Model.TrangThai == item)
+                                            {
+                                                switch (Model.TrangThai)
+                                                {
+                                                    case 4:
+                                                        <option selected value="@item">Đã nhận hàng</option>
+                                                        break;
+                                                    case 3:
+                                                        <option selected value="@item">Đang giao hàng</option>
+                                                        break;
+                                                    case 2:
+                                                        <option selected value="@item">Chấp nhận đơn</option>
+                                                        break;
+                                                    case 1:
+                                                        <option selected value="@item">Chờ duyệt</option>
+                                                        break;
+                                                    case 5:
+                                                        <option selected value="@item">Hủy đơn</option>
+                                                        break;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                switch (@item)
+                                                {
+                                                    case 4:
+                                                        <option value="@item">Đã nhận hàng</option>
+                                                        break;
+                                                    case 3:
+                                                        <option value="@item">Đang giao hàng</option>
+                                                        break;
+                                                    case 2:
+                                                        <option value="@item">Chấp nhận đơn</option>
+                                                        break;
+                                                    case 1:
+                                                        <option value="@item">Chờ duyệt</option>
+                                                        break;
+                                                    case 5:
+                                                        <option value="@item">Hủy đơn</option>
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                        }
+                                    </select>
+                                }
+                            </div>
+                            <div class="iq-card-body">
+                                <div class="table-responsive">
+                                    <h5 class="card-title">Chi tiết phiếu xuất</h5>
+                                    <table style="text-align: center;" class="data-tables table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 30%;">Tên Sách</th>
+                                                <th style="width: 7%;">Ảnh</th>
+                                                <th style="width: 8%;">Số Thùng</th>
+                                                <th style="width: 8%;">Sách/thùng</th>
+                                                <th style="width: 12%;">Giá Nhập/Thùng</th>
+                                                <th style="width: 12%;">Thành Tiền</th>
+                                                @if (Model.TrangThai == 2)
+                                                {
+                                                    <th style="width: 10%;">Thao Tác</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        @{
+                                            if (ctpxk != null)
+                                            {
+                                                foreach (ctdonxuat item in ctpxk)
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: left;">#@item.MaSach - @item.sach.TenSach</td>
+                                                        <td><img class="img-fluid rounded" src="@Url.Content("~/assets/book_images/" + item.sach.Anh)" alt=""></td>
+                                                        <td>x @item.SoLuong</td>
+                                                        @foreach (thungsach ts in item.thungsaches)
+                                                        {
+                                                            if (ts.SoLuongSach != null)
+                                                            {
+                                                                <td>@ts.SoLuongSach</td>
+                                                                break;
+                                                            }
+                                                        }
+                                                        <td>@String.Format("{0:N0}", item.GiaXuat) ₫</td>
+                                                        <td>@String.Format("{0:N0}", item.GiaXuat * item.SoLuong) ₫</td>
+                                                        @if (Model.TrangThai == 2)
+                                                        {
+                                                            <td>
+                                                                <div class="flex align-items-center list-user-action">
+                                                                    @*<a href="@Url.Action("XoaCTPNK","Admin", new { MaCTDonNhap = item.MaCTDonXuat, @Url = Request.Url.ToString() })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="ri-delete-bin-line"></i></a>
+                                                                    *@
+                                                                </div>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Tổng tiền :</label>
+                                <input disabled id="TongTien" name="TongTien" value="@String.Format("{0:N0}", @Model.TongTien) ₫" type="text" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Ngày tạo :</label>
+                                <input disabled id="NgayTao" name="NgayTao" value="@Model.NgayTao" type="text" class="form-control" placeholder="">
+                            </div>
+                            @if (Model.TrangThai != 0 || Model.TrangThai == 1)
+                            {
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

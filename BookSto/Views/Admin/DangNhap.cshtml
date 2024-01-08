@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Session["HoTen"] == null)
+{
+    <section class="sign-in-page">
+        <div class="container p-0">
+            <div class="row no-gutters height-self-center">
+                <div class="col-sm-12 align-self-center page-content rounded">
+                    <div class="row m-0">
+                        <div class="col-sm-12 sign-in-page-data">
+                            <div class="sign-in-from bg-primary rounded">
+                                <h3 class="mb-0 text-center text-white">Đăng Nhập</h3>
+                                <p class="text-center text-white">Nhập tài khoản và mật khẩu của bạn để truy cập</p>
+                                <form action="@Url.Action("DangNhap", "Admin")" method="post" class="mt-4 form-text">
+                                    @if (ViewBag.DangNhapThatBai != null && ViewBag.DangNhapThatBai != "")
+                                    {
+                                        <span style="color:red; font-size:85%;">@ViewBag.DangNhapThatBai</span>
+                                    }
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Tài Khoản</label>
+                                        <input  class="form-control mb-0" id="TaiKhoan" name="TaiKhoan" placeholder="Tài khoản">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Mật Khẩu</label>
+                                        @*<a href="#" class="float-right text-dark">Forgot password?</a>*@
+                                        <input type="password" class="form-control mb-0" id="Matkhau" name="MatKhau" placeholder="Mật khẩu">
+                                    </div>
+
+                                    @*<div class="d-inline-block w-100">
+                                        <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <label class="custom-control-label" for="customCheck1">Remember Me</label>
+                                        </div>
+                                    </div>*@
+                                    <div class="sign-info text-center">
+                                        <button type="submit" class="btn btn-white d-block w-100 mb-2">Đăng Nhập</button>
+                                        <span class="text-dark dark-color d-inline-block line-height-2">Bạn chưa có tài khoản? - <a href="@Url.Action("DangKy","Admin")" class="text-white">Đăng ký</a></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

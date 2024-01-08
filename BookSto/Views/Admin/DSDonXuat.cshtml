@@ -1,0 +1,144 @@
+﻿@using BookSto.Models
+@model List<donxuat>
+@{
+    ViewBag.Title = "Đơn xuất";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var search = "";
+    if (ViewBag.search != null)
+    {
+        search = ViewBag.search;
+    }
+}
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Phiếu xuất kho</h4>
+                        </div>
+                        <div class="iq-search-bar">
+                            <form action="#" class="searchbox">
+                                @if (search != "")
+                                {
+                                    <input value="@search" name="search" id="search" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                else
+                                {
+                                    <input value="" name="search" id="search" type="text" class="text search-input" placeholder="Tìm kiếm ...">
+                                }
+                                <a type="submit" class="search-link" href=""><i class="ri-search-line"></i></a>
+                            </form>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table style="text-align: center;" class="data-tables table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 7%;">Mã PXK</th>
+                                        <th style="width: 20%;">Tên nhân viên</th>
+                                        <th style="width: 20%;">Tên khách hàng</th>
+                                        <th style="width: 20%;">Ngày tạo</th>
+                                        <th style="width: 13%;">Tổng tiền</th>
+                                        <th style="width: 10%;">Trạng Thái</th>
+                                        <th style="width: 10%;">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    foreach (donxuat item in Model)
+                                    {
+                                        <tr>
+                                            <td>#@item.MaDB</td>
+                                            @if (item.MaNhanVien != null)
+                                            {
+                                                <td style="text-align: left;">#@item.MaNhanVien - @item.nguoidung1.HoTen</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align: left;"></td>
+                                            }
+                                            <td style="text-align: left;">#@item.MaKhachHang - @item.nguoidung.HoTen</td>
+                                            <td>@item.NgayTao</td>
+                                            <td>@String.Format("{0:N0}", item.TongTien) ₫</td> @*@String.Format("{0:C}", item.TongTien) 500.000,00 đ *@
+                                            <td style="text-align: center;">
+                                                @switch (item.TrangThai)
+                                                {@*trạng thái đơn xuất (1: chờ admin duyệt, 5: hủy đơn, 2:admin chấp nhận đơn, 3:đang giao hàng, 4 : đã nhận hàng)*@
+                                                case 5:
+                                                    <span class="badge badge-secondary">Hủy đơn</span>
+                                                    break;
+                                                case 1:
+                                                    <span class="badge badge-warning">Chờ duyệt</span>
+                                                    break;
+                                                case 2:
+                                                    <span class="badge badge-info">Chấp nhận đơn</span>
+                                                    break;
+                                                case 3:
+                                                    <span class="badge badge-warning">Đang giao hàng</span>
+                                                    break;
+                                                case 4:
+                                                    <span class="badge badge-success">Đã nhận hàng</span>
+                                                    break;
+                                            }
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <div class="flex align-items-center list-user-action">
+                                                    @if (item.TrangThai != 5)
+                                                    {
+                                                        <a href="@Url.Action("InHD","Admin", new { MaDB = item.MaDB })" id="btnOpenInvoiceForm" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="In hóa đơn"><i class="ri-printer-line"></i></a>
+                                                    }
+                                                    <a href="@Url.Action("NhanDon","Admin", new { MaDB = item.MaDB })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa"><i class="ri-pencil-line"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        // Sử dụng jQuery hoặc JavaScript thông thường để xử lý sự kiện click
+        $(document).ready(function () {
+            $("#btnOpenInvoiceForm").click(function () {
+                // Lấy nội dung hóa đơn từ Action GenerateInvoice
+                $.get("/Admin/InHD", function (data) {
+                    // Hiển thị form hóa đơn trong dialog hoặc modal
+                    showInvoiceForm(data);
+                });
+            });
+        });
+
+        // Hiển thị form hóa đơn trong dialog hoặc modal
+        function showInvoiceForm(invoiceContent) {
+            // Hiển thị nội dung hóa đơn trong dialog hoặc modal
+            // Ví dụ: sử dụng thư viện jQuery UI Dialog
+            $("#invoiceContent").html(invoiceContent);
+            $("#invoiceContent").dialog({
+                title: "Hóa Đơn",
+                modal: true,
+                width: 600,
+                buttons: {
+                    "In Hóa Đơn": function () {
+                        // Kích thích chức năng in của trình duyệt
+                        window.print();
+                    },
+                    "Đóng": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
+    </script>
+} 

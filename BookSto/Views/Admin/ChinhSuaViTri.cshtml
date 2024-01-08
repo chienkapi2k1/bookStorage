@@ -1,0 +1,244 @@
+﻿@using BookSto.Models
+@model vitri
+@{
+    ViewBag.Title = "ChinhSuaViTri";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    List<SachThung> viewbag_thungsach = TempData["thungsach_update"] as List<SachThung>;
+    TempData.Keep("thungsach_update"); // giữ lại tempdata vì khi bị đọc 1 lần sẽ tự xóa
+    List<vitri> viewbag_vitricha = TempData["vitricha_update"] as List<vitri>;
+    TempData.Keep("vitricha_update");
+    List<int?> viewbag_LoaiViTri = TempData["LoaiViTri_update"] as List<int?>;
+    TempData.Keep("LoaiViTri_update");
+    string tb = ViewBag.name_ThongBao;
+    string  name_input = "Nha";
+    switch (Model.LoaiViTri)
+    {
+        case 1:
+            name_input = "Nha";
+            break;
+        case 2:
+            name_input = "Ke";
+            break;
+        case 3:
+            name_input = "Tang";
+            break;
+        case 4:
+            name_input = "O";
+            break;
+    }
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Chỉnh sửa vị trí</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("ChinhSuaViTri", "Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Mã vị trí: #@Model.MaViTri</label>
+                                <input value="@Model.MaViTri" id="MaViTri" name="MaViTri" type="hidden" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã Thùng:</label>
+                                <select class="form-control" id="MaThung" name="MaThung">
+                                    <option value="">Trống</option>
+                                    @if (viewbag_thungsach.Count() > 0)
+                                    {
+                                        foreach (SachThung item in viewbag_thungsach)
+                                        {
+                                            if (Model.MaThung == item.MaThung)
+                                            {
+                                                <option selected value="@item.MaThung">#@item.MaThung - @item.TenSach</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaThung">#@item.MaThung - @item.TenSach</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Mã vị trí cha:</label>
+                                <select class="form-control" id="MaViTriCha" name="MaViTriCha">
+                                    <option value="" selected>Không khả dụng</option>
+                                    @foreach (vitri item in viewbag_vitricha)
+                                    {
+                                        if (Model.MaViTriCha == item.MaViTri)
+                                        {
+                                            <option selected value="@Model.MaViTriCha">#@item.MaViTri - @item.TenViTri</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MaViTri">#@item.MaViTri - @item.TenViTri</option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Loại vị trí:</label>
+                                <input id="LoaiViTri" name="LoaiViTri" value="@Model.LoaiViTri" hidden type="text" class="form-control">
+@*                                <select class="form-control" id="LoaiViTri" name="LoaiViTri">
+                                    @foreach (int? item in viewbag_LoaiViTri)
+                                    {
+                                        if (Model.LoaiViTri == item)
+                                        {
+                                            switch (item)
+                                            {
+                                                case 1:
+                                                    <option selected value="@Model.LoaiViTri">Nhà</option>
+                                                    break;
+                                                case 2:
+                                                    <option selected value="@Model.LoaiViTri">Kệ</option>
+                                                    break;
+                                                case 3:
+                                                    <option selected value="@Model.LoaiViTri">Tầng</option>
+                                                    break;
+                                                case 4:
+                                                    <option selected value="@Model.LoaiViTri">Ô</option>
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            switch (item)
+                                            {
+                                                case 1:
+                                                    <option value="@item">Nhà</option>
+                                                    break;
+                                                case 2:
+                                                    <option value="@item">Kệ</option>
+                                                    break;
+                                                case 3:
+                                                    <option value="@item">Tầng</option>
+                                                    break;
+                                                case 4:
+                                                    <option value="@item">Ô</option>
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                </select>*@
+                            </div>
+                            <div class="form-group">
+                                <label>Tên vị trí: (1 chữ số hoặc chữ cái)</label>
+                                <span style="color:red; font-size:14px;">@tb</span>
+                                @{ // cắt chuỗi vd: Tầng 1 => 1
+                                    string ten_vitri = Model.TenViTri;
+                                    string vitri = ten_vitri.Substring(ten_vitri.Length - 1, 1)[0].ToString();
+                                }
+                                <input value="@vitri" id="name_id" name="@name_input" type="text" class="form-control" placeholder="1, 2, 3... hoặc A, B, C...">
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng Thái:</label>
+                                <select class="form-control" id="TrangThai" name="TrangThai">
+                                    @for (int? item = 2; item >= 0; item--)// foreach(int? item in viewbag_TrangThai)
+                                    {
+                                        if (Model.TrangThai == item)
+                                        {
+                                            switch (item)
+                                            {
+                                                case 0:
+                                                    <option selected value="@Model.TrangThai">Trống</option>
+                                                    break;
+                                                case 1:
+                                                    <option selected value="@Model.TrangThai">Đầy</option>
+                                                    break;
+                                                case 2:
+                                                    <option selected value="@Model.TrangThai">Không khả dụng</option>
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            switch (item)
+                                            {
+                                                case 0:
+                                                    <option value="@item">Trống</option>
+                                                    break;
+                                                case 1:
+                                                    <option value="@item">Đầy</option>
+                                                    break;
+                                                case 2:
+                                                    <option value="@item">Không khả dụng</option>
+                                                    break;
+                                            }
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#MaThung").change(function () {
+                var val_MaThung = $("#MaThung").val();
+                var check = 2; // val_MaThung = "" là k chọn mã thùng
+                if (val_MaThung != "") {
+                    check = 1;                  // có chọn mã thùng
+                }
+                if (check == 1) {
+                    $('#LoaiViTri option').each(function () {
+                        if ($(this).val() == 4) {
+                            $(this).prop("selected", true);
+                        }
+                    });
+                    $('#TrangThai option').each(function () {
+                        if ($(this).val() == 1) {
+                            $(this).prop("selected", true);
+                        }
+                    });
+                } else {
+                    $('#TrangThai option').each(function () {
+                        if ($(this).val() == 0) {
+                            $(this).prop("selected", true);
+                        }
+                    });
+                }
+                change_name_inputName();
+            });
+            $("#LoaiViTri").change(function () {
+                change_name_inputName();
+            });
+            function change_name_inputName() {
+                var name_id = $('#LoaiViTri').find('option:selected').text();
+                var input_name_new = '';
+                switch (name_id) {
+                    case "Ô":
+                        input_name_new = 'O';
+                        break;
+                    case "Tầng":
+                        input_name_new = 'Tang';
+                        break;
+                    case "Kệ":
+                        input_name_new = 'Ke';
+                        break;
+                    case "Nhà":
+                        input_name_new = 'Nha';
+                        break;
+                }
+                const input = document.getElementById("name_id");
+                input.setAttribute("name", input_name_new);
+                //console.log(name_id + " , " + " , " + input_name_new);
+            }
+        });
+    </script>
+}

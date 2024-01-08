@@ -1,0 +1,151 @@
+﻿@using BookSto.Models
+@model List<ChiTietPNK>
+@{
+    ViewBag.Title = "LapPhieuNhapKho";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    List<nguoidung> temp_khachhang = TempData["khachhang"] as List<nguoidung>;
+    TempData.Keep("khachhang");
+    List<sach> temp_lst_sach = TempData["lst_sach"] as List<sach>;
+    TempData.Keep("lst_sach");
+}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Lập Phiếu Nhập Kho</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form action="@Url.Action("LapPhieuNhapKho","Admin")" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Nhân Viên:</label>
+                                <input type="hidden" id="MaNhanVien" name="MaNhanVien" value="@Session["MaNguoiDung"]">
+                                <input class="form-control" disabled id="exampleInputDisabled1" value="#@Session["MaNguoiDung"] - @Session["HoTen"]">
+                            </div>
+                            <div class="form-group">
+                                <label>Hàng Nhập:</label>
+                                <select class="form-control" id="MaSach" name="MaSach">
+                                    <option value="null" selected>Trống</option>
+                                    @if (temp_lst_sach.Count() > 0 && temp_lst_sach != null)
+                                    {
+                                        foreach (sach item in temp_lst_sach)
+                                        {
+                                            <option value="@item.MaSach">#@item.MaSach - @item.TenSach</option>
+                                        }
+                                    }
+                                </select>
+                                <label>Số Thùng:</label>
+                                <input class="form-control" id="SoThung" name="SoThung" value="1" type="number" min="1">
+                                <label>Số sách trong thùng</label>
+                                <input class="form-control" id="SoSachTrongThung" name="SoSachTrongThung" value="1" type="number" min="1">
+                                <label>Giá nhập 1 thùng</label>
+                                <input class="form-control" id="GiaNhap1Thung" name="GiaNhap1Thung" value="1" type="number" min="1">
+                                <a style="display: none;" class="btn btn-primary mb-3" id="url_action" href="#"><i class="ion-plus-circled"></i></a>
+                            </div>
+                            <div class="iq-card-body">
+                                <div class="table-responsive">
+                                    <h5 class="card-title">Chi tiết phiếu nhập</h5>
+                                    <table style="text-align: center;" class="data-tables table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 30%;">Tên Thùng</th>
+                                                <th style="width: 7%;">Ảnh</th>
+                                                <th style="width: 8%;">Số Thùng</th>
+                                                <th style="width: 8%;">Sách/thùng</th>
+                                                <th style="width: 12%;">Giá Nhập/Thùng</th>
+                                                <th style="width: 12%;">Thành Tiền</th>
+                                                <th style="width: 10%;">Thao Tác</th>
+                                            </tr>
+                                        </thead>
+                                        @{
+                                            if (Model != null)
+                                            {
+                                                foreach (ChiTietPNK item in Model)
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: left;">#@item.MaSach - @item.TenSach</td>
+                                                        <td><img class="img-fluid rounded" src="@Url.Content("~/assets/book_images/" + item.Anh)" alt=""></td>
+                                                        <td>x @item.SoThung</td>
+                                                        <td>@item.SoSachTrongThung</td>
+                                                        <td>@String.Format("{0:N0}", item.GiaNhap1Thung) ₫</td>
+                                                        <td>@String.Format("{0:N0}", item.ThanhTien) ₫</td>
+                                                        <td>
+                                                            <div class="flex align-items-center list-user-action">
+                                                                <a href="@Url.Action("XoaCTDN_Session","Admin", new { MaSach = item.MaSach, @Url = Request.Url.ToString() })" class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="ri-delete-bin-line"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Khách hàng:</label>
+                                <select selectChanged class="form-control" id="MaKhachHang" name="MaKhachHang">
+@*                                    <option value="null">Trống</option>*@
+                                    @if (temp_khachhang.Count() > 0 && temp_khachhang != null)
+                                    {
+                                        foreach (nguoidung item in temp_khachhang)
+                                        {
+                                            <option value="@item.MaNguoiDung">#@item.MaNguoiDung - @item.HoTen</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div id="name_vitri" class="form-group">
+                                <label>Ghi chú :</label>
+                                <input id="GhiChu" name="GhiChu" type="text" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng Thái:</label>
+                                <select class="form-control" id="TrangThai" name="TrangThai">
+                                    <option selected value="2">Đang xử lý</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            function change_id(id_main) {
+                $(id_main).change(function () {
+                    var MaSach = $('#MaSach').val();
+                    var SoThung = $('#SoThung').val();
+                    var SoSachTrongThung = $('#SoSachTrongThung').val();
+                    var GiaNhap1Thung = $('#GiaNhap1Thung').val();
+                    var link = document.getElementById("url_action");
+                    var urlRequest = window.location.href.toString();
+                    link.href = "/Admin/ThemCTDN_Session?MaSach=" + MaSach + "&url=" + urlRequest + "&SoThung=" + SoThung + "&SoSachTrongThung=" + SoSachTrongThung + "&GiaNhap1Thung=" + GiaNhap1Thung;
+                    console.log(id_main);
+                });
+            }
+            change_id('#MaSach');
+            change_id('#SoThung');
+            change_id('#SoSachTrongThung');
+            change_id('#GiaNhap1Thung');
+            $('#MaSach').change(function () {
+                if ($('#MaSach').val() != "null") {
+                    $('#url_action').show();
+                }
+                else {
+                    $('#url_action').hide();
+                }
+            });
+        });
+    </script>
+}

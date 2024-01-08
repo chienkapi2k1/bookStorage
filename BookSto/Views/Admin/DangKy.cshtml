@@ -1,0 +1,87 @@
+﻿@model BookSto.Models.nguoidung
+@{
+    ViewBag.Title = "Đăng Ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int? nv = TempData["nv"] as int?;
+    TempData.Keep("nv");
+}
+<!-- Sign up Start -->
+<section class="sign-in-page">
+    <div class="container p-0">
+        <div class="row no-gutters height-self-center">
+            <div class="col-sm-12 align-self-center page-content rounded">
+                <div class="row m-0">
+                    <div class="col-sm-12 sign-in-page-data">
+                        <div class="sign-in-from bg-primary rounded">
+                            <h3 class="mb-0 text-center text-white">Đăng Ký</h3>
+                            <p class="text-center text-white">Nhập đầy đủ và chính xác thông tin của bạn để đăng ký</p>
+                            <form action="@Url.Action("DangKy", "Admin")" method="post" class="mt-4 form-text">
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @if (nv == null)
+                                {
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Họ và Tên</label>
+                                        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                                        <input type="text" class="form-control mb-0" id="HoTen" name="HoTen" placeholder="Nhập họ và tên">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Số điện thoại</label>
+                                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                                        <input class="form-control mb-0" id="SDT" name="SDT" placeholder="Nhập SĐT của bạn">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Địa Chỉ</label>
+                                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                                        <input class="form-control mb-0" id="DiaChi" name="DiaChi" placeholder="Địa chỉ nơi bạn sẽ nhận mặt hàng">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Role</label>
+                                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                                        <input disabled class="form-control mb-0" value="NHANVIEN" id="Role" name="Role" placeholder="Chức vụ">
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Tài Khoản</label>
+                                    @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+                                    @if (ViewBag.thongbaotk != null && ViewBag.thongbaotk != "")
+                                    {
+                                        <span style="color:red">@ViewBag.thongbaotk</span>
+                                    }
+                                    <input class="form-control mb-0" id="TaiKhoan" name="TaiKhoan" placeholder="Nhập tên tài khoản bạn muốn">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Mật Khẩu</label>
+                                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                                    <input type="password" class="form-control mb-0" id="Matkhau" name="MatKhau" placeholder="Mật khẩu cần có độ bảo mật cao">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Xác Nhận Mật Khẩu</label>
+                                    @if (ViewBag.thongbaomk != null && ViewBag.thongbaomk != "")
+                                    {
+                                        <span style="color:red">@ViewBag.thongbaomk</span>
+                                    }
+                                    <input type="password" class="form-control mb-0" name="XacnhanMatKhau" id="XacnhanMatKhau" placeholder="Nhập mật khẩu của bạn một lần nữa">
+                                </div>
+                                <div class="d-inline-block w-100">
+                                    <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <label class="custom-control-label" for="customCheck1">Tôi chấp nhận các<a href="#" class="text-light"> Điều Khoản và Điều Kiện</a></label>
+                                    </div>
+                                </div>
+                                <div class="sign-info text-center">
+                                    <button type="submit" class="btn btn-white d-block w-100 mb-2">Đăng Ký</button>
+                                    <span class="text-dark d-inline-block line-height-2">Bạn đã có Tài khoản? - <a href="@Url.Action("DangNhap","Admin")" class="text-white">Đăng Nhập</a></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Sign up END -->
